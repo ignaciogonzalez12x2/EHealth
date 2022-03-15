@@ -15,18 +15,14 @@ class Home extends Component {
     componentDidMount = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            const hospitalCount = await factory.methods.Length_Hospitals(accounts[0]).call();
+            const hospitalCount = await factory.methods.Length_Hospitals();
             //const hospitalInactiveCount = await factory.methods.getHospitals(accounts[0]).call();
             //const receiverDeliveriesCount = await factory.methods.getReceiverDeliveriesCount(accounts[0]).call();
-
-            const hospitalList = await Promise.all(
-                Array(parseInt(hospitalCount))
-                  .fill()
-                  .map((hospital, index) => {
-                    return factory.methods.getAllHospitals(accounts[0], index).call();
-                  })
-              );
             
+            const hospitalList = await factory.methods.getAllHospitals();
+          
+            console.log(hospitalCount);
+            console.log(hospitalList);
             /*const hospitalInactive = await Promise.all(
             Array(parseInt(hospitalActiveCount))
                 .fill()
@@ -53,12 +49,12 @@ class Home extends Component {
     }
 
     renderHospitalRows() {
-        let hospitalCenters = this.state.hospital;
+        let hospitalCenters = this.state.hospitalList;
         return hospitalCenters.map((hospital, index) => {
             return (
                 <HospitalRow
-                    key={index}
-                    id={index}
+                    key={hospital.idHospital}
+                    index={index}
                     hospital={hospital}
                     //permission={permission}
                 />
@@ -87,14 +83,16 @@ class Home extends Component {
                         <Table.Row>
                             <Table.HeaderCell>#</Table.HeaderCell>
                             <Table.HeaderCell>Address</Table.HeaderCell>
-                            <Table.HeaderCell>Receiver</Table.HeaderCell>
-                            <Table.HeaderCell>Message</Table.HeaderCell>
-                            <Table.HeaderCell>Action</Table.HeaderCell>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>City</Table.HeaderCell>
+                            <Table.HeaderCell>State</Table.HeaderCell>
+                            <Table.HeaderCell>Postal Code</Table.HeaderCell>
+                            <Table.HeaderCell>Permission</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>{this.renderHospitalRows()}</Table.Body>
+                    {/*<Table.Body>{this.renderHospitalRows()}</Table.Body>*/}
                 </Table>
-                <Link to="/hospitals/new">
+                <Link to="/hospital/new">
                     <Button
                         content = "New Hospital"
                         icon = "add circle"

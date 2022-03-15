@@ -6,11 +6,11 @@ import web3 from '../ethereum/web3';
 
 class HospitalShow extends Component {
   state = {
-    address: '',
-    sender: '',
-    receiver: '',
-    message: '',
-    deposit: '',
+    idHospital: '',
+    name: '',
+    city: '',
+    state: '',
+    postalCode: '',
     loading: false,
     errorMessage: ''
   };
@@ -22,19 +22,27 @@ class HospitalShow extends Component {
     try {
       let address = this.props.match.params.address;
       let hospitalContract = notification(address);
-
-      let deposit = await web3.eth.getBalance(address)
-
+      debugger;
+      /*let deposit = await web3.eth.getBalance(address);
       let sender = await hospitalContract.methods.sender().call();
       let receiver = await hospitalContract.methods.receivers(0).call();
-      let message = await hospitalContract.methods.message().call();
-
+      let message = await hospitalContract.methods.message().call();*/
+      let idHospital = await web3.eth.getBalance(address);
+      let name = await hospitalContract.methods.name().call();
+      let city = await hospitalContract.methods.city().call();
+      let state = await hospitalContract.methods.state().call();
+      let postalCode = await hospitalContract.methods.postalCode().call();
+      console.log("Hello world ! ");
+      console.log(address);
+      console.log(hospitalContract);
       this.setState({ 
-        address: address,
-        sender: sender,
-        receiver: receiver,
-        message: message,
-        deposit: deposit
+        idHospital: idHospital,
+        name: name,
+        city: city,
+        state: state,
+        postalCode: postalCode
+        //message: message,
+        //deposit: deposit
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -57,13 +65,13 @@ class HospitalShow extends Component {
           <Loader inverted content='Loading...'></Loader>
         </Dimmer>
         <Link to='/'>Back</Link>
-        <h3>Show Delivery</h3>
+        <h3>Show Hospital</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
             <label>Address of Smart Contract</label>
             <Input
               readOnly
-              value={this.state.address}
+              value={this.state.idHospital}
             />
           </Form.Field>
 
@@ -71,7 +79,7 @@ class HospitalShow extends Component {
             <label>Sender</label>
             <Input
               readOnly
-              value={this.state.sender}
+              value={this.state.name}
             />
           </Form.Field>
 
@@ -79,7 +87,7 @@ class HospitalShow extends Component {
             <label>Receiver</label>
             <Input
               readOnly
-              value={this.state.receiver}
+              value={this.state.city}
             />
           </Form.Field>
 
@@ -87,7 +95,7 @@ class HospitalShow extends Component {
             <label>Message</label>
             <Input
               readOnly
-              value={this.state.message}
+              value={this.state.state}
             />
           </Form.Field>
 
@@ -96,7 +104,7 @@ class HospitalShow extends Component {
             <Input
               label="wei"
               labelPosition="right"
-              value={this.state.deposit}
+              value={this.state.postalCode}
             />
           </Form.Field>
 

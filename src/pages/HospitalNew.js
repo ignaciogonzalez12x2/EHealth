@@ -24,12 +24,12 @@ class HospitalNew extends Component {
     try {
         const accounts = await web3.eth.getAccounts();
         await factory.methods
-            .createHospital([this.state.idHospital],
+            .AddHospital([this.state.idHospital,
               this.state.name, 
               this.state.city, 
               this.state.state, 
               this.state.postalCode, 
-              this.state.permission)
+              this.state.permission])
             .send({ from: accounts[0]});
 
         alert('Hospital created!');
@@ -50,10 +50,10 @@ class HospitalNew extends Component {
         <h3>Create New Hospital</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label>Receiver</label>
+            <label>Address</label>
             <Input
               value={this.state.idHospital}
-              onChange={event => this.setState({ receiver: event.target.value })}
+              onChange={event => this.setState({ idHospital: event.target.value })}
             />
           </Form.Field>
 
@@ -89,13 +89,13 @@ class HospitalNew extends Component {
             />
           </Form.Field>
 
-          <Form.Field>
+          {/*<Form.Field>
             <label>Permission</label>
             <Input
               value={this.state.permission}
               onChange={event => this.setState({ permission: event.target.value })}
             />
-          </Form.Field>
+          </Form.Field>*/}
 
           <Message error header="ERROR" content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
