@@ -129,9 +129,7 @@ contract EHealth {
         hospitalCenters[index].postalCode,hospitalCenters[index].permission);
     }
 
-    
     // *********************************** DOCTORS ***********************************
-
 
     // Add new health professional
     function AddDoctor(string memory _nameDoctor, address _hospital) public {
@@ -161,7 +159,6 @@ contract EHealth {
     }
 
     // Update doctor data
-
     function UpdateDoctor(uint _id, string memory _nameDoctor, address _hospital ) public {
         uint index = FindDoctor(_id);
         doctorsHospital[index].nameDoctor=_nameDoctor;
@@ -173,20 +170,17 @@ contract EHealth {
     }
 
     // Read doctor data
-
     function ReadDoctor(uint _id)public view returns(string memory, address, bool){
         uint index = FindDoctor(_id);
         return (doctorsHospital[index].nameDoctor,doctorsHospital[index].hospital,doctorsHospital[index].permission);
     }
 
     // Number of doctors
-
     function Length_Doctors() public view returns (uint256){
         return hospitalCenters.length;
     }
 
      // All Doctors 
-
     function getAllDoctors() public view returns (Doctor[] memory){
         Doctor[] memory ret = new Doctor[](doctorsHospital.length);
         for (uint i = 0; i< doctorsHospital.length; i++) {
@@ -196,7 +190,6 @@ contract EHealth {
     }
 
     // All Doctors in a hospital
-
     function getAllDoctorsInHospital(address _address) public view returns (Doctor[] memory){
         Doctor[] memory ret = new Doctor[](doctorsHospital.length);
         for (uint i = 0; i< doctorsHospital.length; i++) {
@@ -206,8 +199,6 @@ contract EHealth {
         }
         return ret;
     }
-
-
 
     // *********************************** SENSORS ***********************************
 
@@ -241,7 +232,6 @@ contract EHealth {
     }
 
     // Update sensor data
-
     function UpdateSensor(uint _id, string memory _mac, string memory _patientName,uint _idDoctor ) public {
         uint index = FindSensor(_id);
         sensorsDoctor[index].MAC=_mac;
@@ -254,20 +244,17 @@ contract EHealth {
     }
 
     // Read sensor data
-
     function ReadSensor(uint _id)public view returns(string memory,string memory, uint, bool){
         uint index = FindSensor(_id);
         return (sensorsDoctor[index].MAC,sensorsDoctor[index].patientName,sensorsDoctor[index].idDoctor,sensorsDoctor[index].active);
     }
 
     // Number of sensors
-    
     function Length_sensors() public view returns (uint256){
         return sensorsDoctor.length;
     }
 
      // All Doctors 
-
     function getAllSensors() public view returns (Sensor[] memory){
         Sensor[] memory ret = new Sensor[](sensorsDoctor.length);
         for (uint i = 0; i< sensorsDoctor.length; i++) {
@@ -277,7 +264,6 @@ contract EHealth {
     }
 
     // All medical sensors for a doctor
-
     function getAllSensorOfDoctor (uint _idDoctor) public view returns (Sensor[] memory){
         Sensor[] memory ret = new Sensor[](sensorsDoctor.length);
         for (uint i = 0; i< sensorsDoctor.length; i++) {
@@ -287,5 +273,4 @@ contract EHealth {
         }
         return ret;
     }
-
 }

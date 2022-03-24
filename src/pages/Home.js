@@ -7,6 +7,9 @@ import HospitalRow from '../components/HospitalRow';
 
 class Home extends Component {
     state = {
+        hospitalList: '',
+        hospitalCount: '',
+        hospitalList2: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,19 +18,19 @@ class Home extends Component {
     componentDidMount = async () => {
         try {
             const accounts = await web3.eth.getAccounts();
-            const hospitalCount = await factory.methods.Length_Hospitals();
+            const hospitalCount = await factory.methods.Length_Hospitals().call();
             //const hospitalInactiveCount = await factory.methods.getHospitals(accounts[0]).call();
             //const receiverDeliveriesCount = await factory.methods.getReceiverDeliveriesCount(accounts[0]).call();
             
-            const hospitalList = await factory.methods.getAllHospitals();
+            const hospitalList = await factory.methods.getAllHospitals().call();
           
-            console.log(hospitalCount);
-            console.log(hospitalList);
-            /*const hospitalInactive = await Promise.all(
-            Array(parseInt(hospitalActiveCount))
+            //console.log(hospitalCount);
+            //console.log(hospitalList);
+            /*const hospitalList2 = await Promise.all(
+            Array(parseInt(hospitalCount))
                 .fill()
-                .map((hospital, index) => {
-                return factory.methods.getHospitals(accounts[0], index).call();
+                .map(() => {
+                return factory.methods.getAllHospitals().call();
                 })
             );*/
               /*const receiverDeliveries = await Promise.all(
@@ -39,7 +42,9 @@ class Home extends Component {
               );*/
 
             this.setState({ 
-                hospitalList: hospitalList
+                hospitalList: hospitalList,
+                hospitalCount: hospitalCount,
+                //hospitalList2: hospitalList2
                 //hospitalInactive: hospitalInactive
                 //receiverDeliveries: receiverDeliveries 
             });
@@ -53,13 +58,28 @@ class Home extends Component {
         return hospitalCenters.map((hospital, index) => {
             return (
                 <HospitalRow
-                    key={hospital.idHospital}
+                    key={index}
                     index={index}
                     hospital={hospital}
+                    //address = {this.props.address}
+                    //name = {this.props.name}
+                    //city = {this.props.city}
+                    //state = {this.props.state}
+                    //permission={this.props.permission}
                     //permission={permission}
                 />
             );
         });
+
+        /*    let hospitalCenters = hospitalList;
+        let hospitalCount = this.state.Length_Hospitals;
+        for(let i = 0; i < hospitalCount ; i++){
+            <HospitalRow 
+                key = {hospitalCenters[i].idHospital}
+                hospital = {hospitalCenters[i]}
+
+            />
+        }*/ 
     }
 
     render() {
@@ -81,7 +101,6 @@ class Home extends Component {
                 <Table fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>#</Table.HeaderCell>
                             <Table.HeaderCell>Address</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>City</Table.HeaderCell>
@@ -90,11 +109,25 @@ class Home extends Component {
                             <Table.HeaderCell>Permission</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    {/*<Table.Body>{this.renderHospitalRows()}</Table.Body>*/}
+                    <Table.Body>{this.renderHospitalRows()}</Table.Body>
                 </Table>
                 <Link to="/hospital/new">
                     <Button
                         content = "New Hospital"
+                        icon = "add circle"
+                        primary = {true}
+                        />
+                </Link>
+                <Link to="/doctor/new">
+                    <Button
+                        content = "New Doctor"
+                        icon = "add circle"
+                        primary = {true}
+                        />
+                </Link>
+                <Link to="/sensor/new">
+                    <Button
+                        content = "New Sensor"
                         icon = "add circle"
                         primary = {true}
                         />

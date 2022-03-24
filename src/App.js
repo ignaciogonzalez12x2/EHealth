@@ -5,6 +5,8 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import HospitalNew from './pages/HospitalNew';
 import HospitalShow from './pages/HospitalShow';
+import DoctorNew from './pages/DoctorNew';
+import SensorNew from './pages/SensorNew';
 import 'semantic-ui-css/semantic.min.css';
 
 class App extends Component {
@@ -16,7 +18,9 @@ class App extends Component {
                     <Switch>
                         <Route exact path='/' component={Home}/>
                         <Route exact path='/hospital/new' component={HospitalNew}/>
-                        <Route exact path='/hospitals/:address' component={HospitalShow}/>
+                        <Route exact path='/doctor/new' component={DoctorNew}/>
+                        <Route exact path='/sensor/new' component={SensorNew}/>
+                        <Route exact path='/hospitals/' component={HospitalShow}/>
                     </Switch>
                 </main>
             </Container>

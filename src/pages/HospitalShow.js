@@ -28,13 +28,15 @@ class HospitalShow extends Component {
       let receiver = await hospitalContract.methods.receivers(0).call();
       let message = await hospitalContract.methods.message().call();*/
       let idHospital = await web3.eth.getBalance(address);
-      let name = await hospitalContract.methods.name().call();
-      let city = await hospitalContract.methods.city().call();
-      let state = await hospitalContract.methods.state().call();
-      let postalCode = await hospitalContract.methods.postalCode().call();
+      let name = await hospitalContract.methods.name.call();
+      let city = await hospitalContract.methods.city.call();
+      let state = await hospitalContract.methods.state.call();
+      let postalCode = await hospitalContract.methods.postalCode.call();
+
       console.log("Hello world ! ");
       console.log(address);
       console.log(hospitalContract);
+
       this.setState({ 
         idHospital: idHospital,
         name: name,
@@ -68,7 +70,7 @@ class HospitalShow extends Component {
         <h3>Show Hospital</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
-            <label>Address of Smart Contract</label>
+            <label>Address of Hospital</label>
             <Input
               readOnly
               value={this.state.idHospital}
@@ -76,7 +78,7 @@ class HospitalShow extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>Sender</label>
+            <label>Name</label>
             <Input
               readOnly
               value={this.state.name}
@@ -84,7 +86,7 @@ class HospitalShow extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>Receiver</label>
+            <label>City</label>
             <Input
               readOnly
               value={this.state.city}
@@ -92,7 +94,7 @@ class HospitalShow extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>Message</label>
+            <label>State</label>
             <Input
               readOnly
               value={this.state.state}
@@ -100,7 +102,7 @@ class HospitalShow extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>Deposit</label>
+            <label>Postal Code</label>
             <Input
               label="wei"
               labelPosition="right"

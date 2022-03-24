@@ -20,18 +20,15 @@ class HospitalNew extends Component {
     event.preventDefault();
 
     this.setState({ loading: true, errorMessage: '' });
-
     try {
         const accounts = await web3.eth.getAccounts();
         await factory.methods
-            .AddHospital([this.state.idHospital,
-              this.state.name, 
+            .AddHospital(this.state.idHospital,
+              this.state.name,
               this.state.city, 
               this.state.state, 
-              this.state.postalCode, 
-              this.state.permission])
+              this.state.postalCode)
             .send({ from: accounts[0]});
-
         alert('Hospital created!');
         // Refresh, using withRouter
         this.props.history.push('/');

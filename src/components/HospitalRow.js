@@ -16,13 +16,40 @@ class HospitalRow extends Component {
   };
 
   componentDidMount = async () => {
-    let hospitalContract = notification(this.props.hospital);
-    let name = await hospitalContract.methods.name.call();
-    let permission = await hospitalContract.methods.permission().call();
+    /*let hospitalContract = notification(this.props.hospital);
+    let hospital = await hospitalContract.methods.Hospitals(0).call();
+    let idHospital = await hospital.idHospital.call();
+    let name = await hospital.name.call();
+    let city = await hospital.city.call();
+    let state = await hospital.state.call();
+    let permission = await hospital.permission.call();*/
+
+
+    //const hospitalList = await factory.methods.getAllHospitals().call();
+    
+    /*let idHospital =  hospital.idHospital.call();
+    let name =  hospital.name.call();
+    let city =  hospital.city.call();
+    let state =  hospital.state.call();
+    let permission =  hospital.permission.call();*/
+ 
+
+    let idHospital = this.props.hospital.idHospital;
+    let name = this.props.hospital.name;
+    let city = this.props.hospital.city;
+    let state = this.props.hospital.state;
+    let postalCode = this.props.hospital.postalCode;
+    let permission = this.props.hospital.permission;
+
+   // console.log(hospital);
 
     this.setState({ 
+      idHospital: idHospital,
       name: name,
-      permission: permission
+      city: city,
+      state: state,
+      postalCode: postalCode,
+      permission: permission,
     });
   }
 
@@ -49,7 +76,7 @@ class HospitalRow extends Component {
     }
   };
 
- /* onFinish = async (contractAddress) => {
+  onFinish = async (contractAddress) => {
 
     this.setState({ loading: true, errorMessage: '' });
 
@@ -62,37 +89,36 @@ class HospitalRow extends Component {
     } finally {
         this.setState({ loading: false });
     }
-  };*/
+  };
 
   render() {
       return (
           <Table.Row>
-              <Table.Cell>{this.props.idHospital}</Table.Cell>
-              <Table.Cell>{this.props.name}</Table.Cell>
-              <Table.Cell>{this.props.city}</Table.Cell>
-              <Table.Cell>{this.props.state}</Table.Cell>
-              <Table.Cell>{this.props.postalCode}</Table.Cell>
-              <Table.Cell>{this.props.permission}</Table.Cell>
-              <Table.Cell>{this.state.message}</Table.Cell>
+              <Table.Cell>{this.state.idHospital}</Table.Cell>
+              <Table.Cell>{this.state.name}</Table.Cell>
+              <Table.Cell>{this.state.city}</Table.Cell>
+              <Table.Cell>{this.state.state}</Table.Cell>
+              <Table.Cell>{this.state.postalCode}</Table.Cell>
+              <Table.Cell>{this.state.permission.toString()}</Table.Cell>
               <Table.Cell>
-                  {
-                    this.props.sent ? (
+                  
+                    
                       <Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idHospital)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
                         <Button.Content hidden>Finish</Button.Content>
                         <Button.Content visible>
                           <Icon name='send' />
                         </Button.Content>
                       </Button>
-                    ) : (
+                    
                       <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idHospital)} disabled={this.state.state!=='created'} loading={this.state.loading}>
                         <Button.Content hidden>Accept</Button.Content>
                         <Button.Content visible>
                           <Icon name='check' />
                         </Button.Content>
                     </Button>
-                    )
-                  }
-                  <Link to={"/hospitals/"+this.props.idHospital}>
+                    
+                  
+                  <Link to={"/hospitals/"}>
                     <Button animated='vertical' color='blue' onClick={this.onView}>
                       <Button.Content hidden>View</Button.Content>
                       <Button.Content visible>
@@ -101,7 +127,7 @@ class HospitalRow extends Component {
                     </Button>
                   </Link>
                   <Message error header="ERROR" content={this.state.errorMessage} hidden={!this.state.errorMessage} />
-              </Table.Cell>
+                </Table.Cell>
           </Table.Row>
           
       );
