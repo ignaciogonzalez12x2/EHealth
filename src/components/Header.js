@@ -15,7 +15,7 @@ export default () => {
                 <Menu.Item as={Link} to='/doctors/'>
                     Doctors
                 </Menu.Item>
-                <Menu.Item as={Link} to='/sensor/new'>
+                <Menu.Item as={Link} to='/sensors/'>
                     Sensors
                 </Menu.Item>
             </Menu.Menu>
