@@ -4,13 +4,12 @@ import { Form, Button, Message, Input, Dimmer, Loader } from 'semantic-ui-react'
 import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 
-class HospitalShow extends Component {
+class DoctorShow extends Component {
   state = {
-    idHospital: '',
-    name: '',
-    city: '',
-    state: '',
-    postalCode: '',
+    idDoctor: '',
+    nameDoctor: '',
+    hospital: '',
+    permission: false,
     loading: false,
     errorMessage: ''
   };
@@ -21,30 +20,17 @@ class HospitalShow extends Component {
 
     try {
       let address = this.props.match.params.address;
-      let hospitalContract = notification(address);
-
-      /*let deposit = await web3.eth.getBalance(address);
-      let sender = await hospitalContract.methods.sender().call();
-      let receiver = await hospitalContract.methods.receivers(0).call();
-      let message = await hospitalContract.methods.message().call();*/
-      let idHospital = await web3.eth.getBalance(address);
-      let name = await hospitalContract.methods.name.call();
-      let city = await hospitalContract.methods.city.call();
-      let state = await hospitalContract.methods.state.call();
-      let postalCode = await hospitalContract.methods.postalCode.call();
-
-      console.log("Hello world ! ");
-      console.log(address);
-      console.log(hospitalContract);
-
+      let doctorContract = notification(address);
+      let idDoctor = await web3.eth.getBalance(address);
+      let name = await doctorContract.methods.nameDoctor.call();
+      let hospital = await doctorContract.methods.hospital.call();
+      let permission = await doctorContract.methods.permission.call();
+     
       this.setState({ 
-        idHospital: idHospital,
+        idDoctor: idDoctor,
         name: name,
-        city: city,
-        state: state,
-        postalCode: postalCode
-        //message: message,
-        //deposit: deposit
+        hospital: hospital,
+        permission: permission,
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -67,13 +53,13 @@ class HospitalShow extends Component {
           <Loader inverted content='Loading...'></Loader>
         </Dimmer>
         <Link to='/'>Back</Link>
-        <h3>Show Hospital</h3>
+        <h3>Show Doctor</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
             <label>Address of Hospital</label>
             <Input
               readOnly
-              value={this.state.idHospital}
+              value={this.state.idDoctor}
             />
           </Form.Field>
 
@@ -86,27 +72,18 @@ class HospitalShow extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>City</label>
+            <label>Hospital</label>
             <Input
               readOnly
-              value={this.state.city}
+              value={this.state.hospital}
             />
           </Form.Field>
 
           <Form.Field>
-            <label>State</label>
+            <label>Permission</label>
             <Input
               readOnly
-              value={this.state.state}
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>Postal Code</label>
-            <Input
-              label="wei"
-              labelPosition="right"
-              value={this.state.postalCode}
+              value={this.state.permission}
             />
           </Form.Field>
 
@@ -120,4 +97,4 @@ class HospitalShow extends Component {
   }
 }
 
-export default withRouter(HospitalShow);
+export default withRouter(DoctorShow);

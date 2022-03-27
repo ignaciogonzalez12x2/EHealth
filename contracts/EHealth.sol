@@ -28,7 +28,7 @@ contract EHealth {
     mapping(address=> Doctor) public Doctors;
 
     struct Doctor {
-        uint256 idDoctor;
+        address idDoctor;
         string nameDoctor;
         address hospital;
         bool permission;
@@ -43,7 +43,7 @@ contract EHealth {
         uint idSensor;
         string MAC;
         string patientName;
-        uint idDoctor;
+        address idDoctor;
         bool active;
     }
     // Types of sensors
@@ -53,12 +53,12 @@ contract EHealth {
     event NewHospital(address,string,string,string,uint,bool);
     event DeleteHospital(address,string,string,string,uint,bool);
     event RefreshHospital(address,string,string,string,uint);
-    event NewDoctor(uint, string, address, bool);
-    event DeleteDoctor(uint, string, address, bool);
-    event RefreshDoctor(uint, string, address);
-    event NewSensor(uint,string,string,uint,bool);
-    event DeleteSensor(uint,string,string,uint,bool);
-    event RefreshSensor(uint,string,string,uint);
+    event NewDoctor(address, string, address, bool);
+    event DeleteDoctor(address, string, address, bool);
+    event RefreshDoctor(address, string, address);
+    event NewSensor(uint,string,string,address,bool);
+    event DeleteSensor(uint,string,string,address,bool);
+    event RefreshSensor(uint,string,string,address);
 
     // *********************************** HOSPITALS ***********************************
 
@@ -132,14 +132,13 @@ contract EHealth {
     // *********************************** DOCTORS ***********************************
 
     // Add new health professional
-    function AddDoctor(string memory _nameDoctor, address _hospital) public {
+    function AddDoctor(address idDoctor, string memory _nameDoctor, address _hospital) public {
         FindHospital(_hospital);
-        doctorsHospital.push(Doctor(nextIdDoctor, _nameDoctor, _hospital, true));
-        emit NewDoctor(nextIdDoctor,_nameDoctor,_hospital,true);
-        nextIdDoctor++;
+        doctorsHospital.push(Doctor(idDoctor, _nameDoctor, _hospital, true));
+        emit NewDoctor(idDoctor,_nameDoctor,_hospital,true);
     }
     // Find doctor 
-    function FindDoctor(uint _id) internal view returns(uint){
+    function FindDoctor(address _id) internal view returns(uint){
         for(uint i = 0 ; i < doctorsHospital.length ; i++){
             if(doctorsHospital[i].idDoctor==_id){
                 return i;
@@ -149,7 +148,7 @@ contract EHealth {
     }
 
     // Remove permission of the doctor
-    function RemoveDoctor(uint _id) public {
+    function RemoveDoctor(address _id) public {
         uint index = FindDoctor(_id);
         doctorsHospital[index].permission=false;
         emit DeleteDoctor(doctorsHospital[index].idDoctor,
@@ -159,7 +158,7 @@ contract EHealth {
     }
 
     // Update doctor data
-    function UpdateDoctor(uint _id, string memory _nameDoctor, address _hospital ) public {
+    function UpdateDoctor(address _id, string memory _nameDoctor, address _hospital ) public {
         uint index = FindDoctor(_id);
         doctorsHospital[index].nameDoctor=_nameDoctor;
         doctorsHospital[index].hospital=_hospital;
@@ -170,7 +169,7 @@ contract EHealth {
     }
 
     // Read doctor data
-    function ReadDoctor(uint _id)public view returns(string memory, address, bool){
+    function ReadDoctor(address _id)public view returns(string memory, address, bool){
         uint index = FindDoctor(_id);
         return (doctorsHospital[index].nameDoctor,doctorsHospital[index].hospital,doctorsHospital[index].permission);
     }
@@ -203,7 +202,7 @@ contract EHealth {
     // *********************************** SENSORS ***********************************
 
     // Add new sensor in the system 
-    function AddSensor(string memory _mac, string memory _patientName, uint _idDoctor, bool _active) public {
+    function AddSensor(string memory _mac, string memory _patientName, address _idDoctor, bool _active) public {
         FindDoctor(_idDoctor);
         sensorsDoctor.push(Sensor(nextIdSensor,_mac, _patientName, _idDoctor, _active));
         emit NewSensor(nextIdSensor,_mac, _patientName, _idDoctor, _active);
@@ -232,7 +231,7 @@ contract EHealth {
     }
 
     // Update sensor data
-    function UpdateSensor(uint _id, string memory _mac, string memory _patientName,uint _idDoctor ) public {
+    function UpdateSensor(uint _id, string memory _mac, string memory _patientName,address _idDoctor ) public {
         uint index = FindSensor(_id);
         sensorsDoctor[index].MAC=_mac;
         sensorsDoctor[index].patientName=_patientName;
@@ -244,7 +243,7 @@ contract EHealth {
     }
 
     // Read sensor data
-    function ReadSensor(uint _id)public view returns(string memory,string memory, uint, bool){
+    function ReadSensor(uint _id)public view returns(string memory,string memory, address, bool){
         uint index = FindSensor(_id);
         return (sensorsDoctor[index].MAC,sensorsDoctor[index].patientName,sensorsDoctor[index].idDoctor,sensorsDoctor[index].active);
     }
@@ -254,7 +253,7 @@ contract EHealth {
         return sensorsDoctor.length;
     }
 
-     // All Doctors 
+     // All Sensors 
     function getAllSensors() public view returns (Sensor[] memory){
         Sensor[] memory ret = new Sensor[](sensorsDoctor.length);
         for (uint i = 0; i< sensorsDoctor.length; i++) {
@@ -264,7 +263,7 @@ contract EHealth {
     }
 
     // All medical sensors for a doctor
-    function getAllSensorOfDoctor (uint _idDoctor) public view returns (Sensor[] memory){
+    function getAllSensorOfDoctor (address _idDoctor) public view returns (Sensor[] memory){
         Sensor[] memory ret = new Sensor[](sensorsDoctor.length);
         for (uint i = 0; i< sensorsDoctor.length; i++) {
             if(_idDoctor == sensorsDoctor[i].idDoctor){

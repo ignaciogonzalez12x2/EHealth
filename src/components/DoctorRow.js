@@ -3,51 +3,30 @@ import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
 import notification from '../ethereum/notification';
 
-class HospitalRow extends Component {
+class DoctorRow extends Component {
   state = {
-    idHospital: '',
-    name: '',
-    city: '',
-    state: '',
-    postalCode: '',
+    idDoctor: '',
+    nameDoctor: '',
+    hospital: '',
     permission: false,
     loading: false,
     errorMessage: ''
   };
 
   componentDidMount = async () => {
-    /*let hospitalContract = notification(this.props.hospital);
-    let hospital = await hospitalContract.methods.Hospitals(0).call();
-    let idHospital = await hospital.idHospital.call();
-    let name = await hospital.name.call();
-    let city = await hospital.city.call();
-    let state = await hospital.state.call();
-    let permission = await hospital.permission.call();*/
 
+    let idDoctor = this.props.doctor.idDoctor;
+    let nameDoctor = this.props.doctor.nameDoctor;
+    let hospital = this.props.doctor.hospital;
+    let permission = this.props.doctor.permission;
 
-    //const hospitalList = await factory.methods.getAllHospitals().call();
-    
-    /*let idHospital =  hospital.idHospital.call();
-    let name =  hospital.name.call();
-    let city =  hospital.city.call();
-    let state =  hospital.state.call();
-    let permission =  hospital.permission.call();*/
- 
-
-    let idHospital = this.props.hospital.idHospital;
-    let name = this.props.hospital.name;
-    let city = this.props.hospital.city;
-    let state = this.props.hospital.state;
-    let postalCode = this.props.hospital.postalCode;
-    let permission = this.props.hospital.permission;
+   // console.log(hospital);
 
     this.setState({ 
-      idHospital: idHospital,
-      name: name,
-      city: city,
-      state: state,
-      postalCode: postalCode,
-      permission: permission,
+        idDoctor: idDoctor,
+        nameDoctor: nameDoctor,
+        hospital: hospital,
+        permission: permission,
     });
   }
 
@@ -65,7 +44,7 @@ class HospitalRow extends Component {
     
     try {
       // Refresh
-      alert('Hospital accepted!');
+      alert('Doctor accepted!');
       this.setState({ state: 'accepted' });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -80,7 +59,7 @@ class HospitalRow extends Component {
 
     try {
       // Refresh
-      alert('Hospital finished!');
+      alert('Doctor finished!');
       this.setState({ state: 'finished' });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -92,23 +71,21 @@ class HospitalRow extends Component {
   render() {
       return (
           <Table.Row>
-              <Table.Cell>{this.state.idHospital}</Table.Cell>
-              <Table.Cell>{this.state.name}</Table.Cell>
-              <Table.Cell>{this.state.city}</Table.Cell>
-              <Table.Cell>{this.state.state}</Table.Cell>
-              <Table.Cell>{this.state.postalCode}</Table.Cell>
+              <Table.Cell>{this.state.idDoctor}</Table.Cell>
+              <Table.Cell>{this.state.nameDoctor}</Table.Cell>
+              <Table.Cell>{this.state.hospital}</Table.Cell>
               <Table.Cell>{this.state.permission.toString()}</Table.Cell>
               <Table.Cell>
                   
                     
-                      <Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idHospital)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
+                      <Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idDoctor)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
                         <Button.Content hidden>Finish</Button.Content>
                         <Button.Content visible>
                           <Icon name='send' />
                         </Button.Content>
                       </Button>
                     
-                      <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idHospital)} disabled={this.state.state!=='created'} loading={this.state.loading}>
+                      <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idDoctor)} disabled={this.state.state!=='created'} loading={this.state.loading}>
                         <Button.Content hidden>Accept</Button.Content>
                         <Button.Content visible>
                           <Icon name='check' />
@@ -132,4 +109,4 @@ class HospitalRow extends Component {
     }
 }
 
-export default HospitalRow;
+export default DoctorRow;

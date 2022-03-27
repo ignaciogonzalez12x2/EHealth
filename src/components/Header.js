@@ -9,10 +9,10 @@ export default () => {
                 eHealth with Ethereum
             </Menu.Item>
             <Menu.Menu position="right">
-                <Menu.Item as={Link} to='/hospital/new'>
+                <Menu.Item as={Link} to='/'>
                     Hospitals
                 </Menu.Item>
-                <Menu.Item as={Link} to='/doctor/new'>
+                <Menu.Item as={Link} to='/doctors/'>
                     Doctors
                 </Menu.Item>
                 <Menu.Item as={Link} to='/sensor/new'>

@@ -21,8 +21,9 @@ class DoctorNew extends Component {
     try {
         const accounts = await web3.eth.getAccounts();
         await factory.methods
-            .AddDoctor(this.state.nameDoctor,
-              this.state.hospital)
+            .AddDoctor(this.state.idDoctor,
+                this.state.nameDoctor,
+                this.state.hospital)
             .send({ from: accounts[0]
             });
         alert('Doctor created!');
@@ -42,6 +43,13 @@ class DoctorNew extends Component {
         <Link to='/'>Back</Link>
         <h3>Create New Doctor</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
+          <Form.Field>
+            <label>Doctor ID</label>
+            <Input
+              value={this.state.idDoctor}
+              onChange={event => this.setState({ idDoctor: event.target.value })}
+            />
+          </Form.Field>
           <Form.Field>
             <label>Doctor name</label>
             <Input

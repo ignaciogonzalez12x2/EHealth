@@ -7,7 +7,9 @@ import HospitalNew from './pages/HospitalNew';
 import HospitalShow from './pages/HospitalShow';
 import DoctorNew from './pages/DoctorNew';
 import SensorNew from './pages/SensorNew';
+import DoctorShow from './pages/DoctorShow';
 import 'semantic-ui-css/semantic.min.css';
+import HomeDoctor from './pages/HomeDoctor';
 
 class App extends Component {
     render() {
@@ -20,7 +22,8 @@ class App extends Component {
                         <Route exact path='/hospital/new' component={HospitalNew}/>
                         <Route exact path='/doctor/new' component={DoctorNew}/>
                         <Route exact path='/sensor/new' component={SensorNew}/>
-                        <Route exact path='/hospitals/' component={HospitalShow}/>
+                        {/*<Route exact path='/hospitals/' component={HospitalShow}/>*/}
+                        <Route exact path='/doctors/' component={HomeDoctor}/>
                     </Switch>
                 </main>
             </Container>
