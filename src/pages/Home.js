@@ -60,7 +60,7 @@ class Home extends Component {
                 <Table fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Address</Table.HeaderCell>
+                            <Table.HeaderCell>Hospital ID</Table.HeaderCell>
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             <Table.HeaderCell>City</Table.HeaderCell>
                             <Table.HeaderCell>State</Table.HeaderCell>

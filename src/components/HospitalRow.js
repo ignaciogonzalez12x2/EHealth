@@ -116,7 +116,7 @@ class HospitalRow extends Component {
                     </Button>
                     
                   
-                  <Link to={"/hospitals/"}>
+                  <Link to={"/hospitals/"+this.props.hospital[0]}>
                     <Button animated='vertical' color='blue' onClick={this.onView}>
                       <Button.Content hidden>View</Button.Content>
                       <Button.Content visible>

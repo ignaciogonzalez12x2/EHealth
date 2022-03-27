@@ -52,7 +52,7 @@ contract EHealth {
     // EVENTS 
     event NewHospital(address,string,string,string,uint,bool);
     event DeleteHospital(address,string,string,string,uint,bool);
-    event RefreshHospital(address,string,string,string,uint);
+    event RefreshHospital(address,string,string,string,uint,bool);
     event NewDoctor(address, string, address, bool);
     event DeleteDoctor(address, string, address, bool);
     event RefreshDoctor(address, string, address);
@@ -91,17 +91,19 @@ contract EHealth {
 
     // Update hospital data
 
-    function UpdateHospital(address _address, string memory _name, string memory _city, string memory _state, uint _postalCode ) public {
+    function UpdateHospital(address _address, string memory _name, string memory _city, string memory _state, uint _postalCode, bool _permission ) public {
         uint index = FindHospital(_address);
         hospitalCenters[index].name=_name;
         hospitalCenters[index].city=_city;
         hospitalCenters[index].state=_state;
         hospitalCenters[index].postalCode=_postalCode;
+        hospitalCenters[index].permission=_permission;
         emit RefreshHospital(hospitalCenters[index].idHospital, 
         hospitalCenters[index].name, 
         hospitalCenters[index].city, 
         hospitalCenters[index].state, 
-        hospitalCenters[index].postalCode
+        hospitalCenters[index].postalCode,
+        hospitalCenters[index].permission
         );
     }
 
