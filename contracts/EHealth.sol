@@ -58,7 +58,7 @@ contract EHealth {
     event RefreshDoctor(address, string, address,bool);
     event NewSensor(uint,string,string,address,bool);
     event DeleteSensor(uint,string,string,address,bool);
-    event RefreshSensor(uint,string,string,address);
+    event RefreshSensor(uint,string,string,address,bool);
 
     // *********************************** HOSPITALS ***********************************
 
@@ -235,15 +235,17 @@ contract EHealth {
     }
 
     // Update sensor data
-    function UpdateSensor(uint _id, string memory _mac, string memory _patientName,address _idDoctor ) public {
+    function UpdateSensor(uint _id, string memory _mac, string memory _patientName,address _idDoctor, bool _active ) public {
         uint index = FindSensor(_id);
         sensorsDoctor[index].MAC=_mac;
         sensorsDoctor[index].patientName=_patientName;
         sensorsDoctor[index].idDoctor=_idDoctor;
+        sensorsDoctor[index].active=_active;
         emit RefreshSensor(sensorsDoctor[index].idSensor,
         sensorsDoctor[index].MAC,
         sensorsDoctor[index].patientName,
-        sensorsDoctor[index].idDoctor);
+        sensorsDoctor[index].idDoctor,
+        sensorsDoctor[index].active);
     }
 
     // Read sensor data

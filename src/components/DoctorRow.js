@@ -78,17 +78,17 @@ class DoctorRow extends Component {
               <Table.Cell>
                   
                     
-                      <Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idDoctor)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
+                      {/*<Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idDoctor)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
                         <Button.Content hidden>Finish</Button.Content>
                         <Button.Content visible>
                           <Icon name='send' />
                         </Button.Content>
-                      </Button>
+                   </Button>*/}
                     
                       <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idDoctor)} disabled={this.state.state!=='created'} loading={this.state.loading}>
                         <Button.Content hidden>Accept</Button.Content>
                         <Button.Content visible>
-                          <Icon name='check' />
+                          <Icon name='remove' />
                         </Button.Content>
                     </Button>
                     

@@ -90,12 +90,12 @@ class SensorRow extends Component {
                       <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idSensor)} disabled={this.state.state!=='created'} loading={this.state.loading}>
                         <Button.Content hidden>Accept</Button.Content>
                         <Button.Content visible>
-                          <Icon name='check' />
+                          <Icon name='remove' />
                         </Button.Content>
                     </Button>
                     
                   
-                  <Link to={"/hospitals/"}>
+                  <Link to={"/sensors/"+this.props.sensor.idSensor}>
                     <Button animated='vertical' color='blue' onClick={this.onView}>
                       <Button.Content hidden>View</Button.Content>
                       <Button.Content visible>

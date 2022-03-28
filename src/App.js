@@ -11,6 +11,8 @@ import DoctorShow from './pages/DoctorShow';
 import 'semantic-ui-css/semantic.min.css';
 import HomeDoctor from './pages/HomeDoctor';
 import HomeSensor from './pages/HomeSensor';
+import SensorShow from './pages/SensorShow';
+
 
 class App extends Component {
     render() {
@@ -25,6 +27,7 @@ class App extends Component {
                         <Route exact path='/sensor/new' component={SensorNew}/>
                         <Route exact path='/hospitals/:address' component={HospitalShow}/>
                         <Route exact path='/doctors/:address' component={DoctorShow}/>
+                        <Route exact path='/sensors/:uint' component={SensorShow}/>
                         <Route exact path='/doctors/' component={HomeDoctor}/>
                         <Route exact path='/sensors/' component={HomeSensor}/>
                     </Switch>
