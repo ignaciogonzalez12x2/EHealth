@@ -83,7 +83,6 @@ class DoctorRow extends Component {
                   <Message error header="ERROR" content={this.state.errorMessage} hidden={!this.state.errorMessage} />
                 </Table.Cell>
           </Table.Row>
-          
       );
     }
 }

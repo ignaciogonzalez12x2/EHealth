@@ -55,6 +55,10 @@ class SensorRow extends Component {
     window.location.reload(true);
   };
 
+  onSend = async () => {
+
+  };
+
 
   render() {
       return (
@@ -65,6 +69,13 @@ class SensorRow extends Component {
               <Table.Cell>{this.state.idDoctor}</Table.Cell>
               <Table.Cell>{this.state.active.toString()}</Table.Cell>
               <Table.Cell>
+
+              <Button animated='vertical' color='blue' onClick={this.onSend}>
+                        <Button.Content hidden>Send</Button.Content>
+                        <Button.Content visible>
+                          <Icon name='send' />
+                        </Button.Content>
+                      </Button>
 
                       <Button animated='vertical' color='blue' onClick={this.onDelete}>
                         <Button.Content hidden>Delete</Button.Content>
