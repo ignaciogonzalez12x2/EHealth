@@ -12,6 +12,9 @@ import 'semantic-ui-css/semantic.min.css';
 import HomeDoctor from './pages/HomeDoctor';
 import HomeSensor from './pages/HomeSensor';
 import SensorShow from './pages/SensorShow';
+import HospitalDelete from './pages/HospitalDelete';
+import DoctorDelete from './pages/DoctorDelete';
+import SensorDelete from './pages/SensorDelete';
 
 
 class App extends Component {
@@ -22,14 +25,17 @@ class App extends Component {
                 <main>
                     <Switch>
                         <Route exact path='/' component={Home}/>
+                        <Route exact path='/doctors/' component={HomeDoctor}/>
+                        <Route exact path='/sensors/' component={HomeSensor}/>
                         <Route exact path='/hospital/new' component={HospitalNew}/>
                         <Route exact path='/doctor/new' component={DoctorNew}/>
                         <Route exact path='/sensor/new' component={SensorNew}/>
                         <Route exact path='/hospitals/:address' component={HospitalShow}/>
                         <Route exact path='/doctors/:address' component={DoctorShow}/>
                         <Route exact path='/sensors/:uint' component={SensorShow}/>
-                        <Route exact path='/doctors/' component={HomeDoctor}/>
-                        <Route exact path='/sensors/' component={HomeSensor}/>
+                        <Route exact path='/nohospital/:address' component={HospitalDelete}/>
+                        <Route exact path='/nodoctor/:address' component={DoctorDelete}/>
+                        <Route exact path='/nosensor/:uint' component={SensorDelete}/>
                     </Switch>
                 </main>
             </Container>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
 import notification from '../ethereum/notification';
+import web3 from '../ethereum/web3';
+import factory from '../ethereum/factory';
 
 class DoctorRow extends Component {
   state = {
@@ -31,42 +33,27 @@ class DoctorRow extends Component {
   }
 
   onView = async () => {
-    /*const campaign = Campaign(this.props.address);
-
-    await campaign.methods.approveRequest(this.props.id).send({
-      from: accounts[0]
-    });*/
   };
 
-  onAccept = async (contractAddress) => {
+  onDelete = async () => {
 
     this.setState({ loading: true, errorMessage: '' });
-    
     try {
-      // Refresh
-      alert('Doctor accepted!');
-      this.setState({ state: 'accepted' });
+        const accounts = await web3.eth.getAccounts();
+        await factory.methods
+            .RemoveDoctor(this.state.idDoctor)
+            .send({ from: accounts[0]});
+        alert('Doctor delete !');
+        // Refresh, using withRouter
+        this.props.history.push('/');
     } catch (err) {
-      this.setState({ errorMessage: err.message });
+        this.setState({ errorMessage: err.message });
     } finally {
         this.setState({ loading: false });
     }
+    window.location.reload(true);
   };
 
-  onFinish = async (contractAddress) => {
-
-    this.setState({ loading: true, errorMessage: '' });
-
-    try {
-      // Refresh
-      alert('Doctor finished!');
-      this.setState({ state: 'finished' });
-    } catch (err) {
-      this.setState({ errorMessage: err.message });
-    } finally {
-        this.setState({ loading: false });
-    }
-  };
 
   render() {
       return (
@@ -76,17 +63,9 @@ class DoctorRow extends Component {
               <Table.Cell>{this.state.hospital}</Table.Cell>
               <Table.Cell>{this.state.permission.toString()}</Table.Cell>
               <Table.Cell>
-                  
-                    
-                      {/*<Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idDoctor)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
-                        <Button.Content hidden>Finish</Button.Content>
-                        <Button.Content visible>
-                          <Icon name='send' />
-                        </Button.Content>
-                   </Button>*/}
-                    
-                      <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idDoctor)} disabled={this.state.state!=='created'} loading={this.state.loading}>
-                        <Button.Content hidden>Accept</Button.Content>
+                
+                      <Button animated='vertical' color='blue' onClick={this.onDelete} >
+                        <Button.Content hidden>Delete</Button.Content>
                         <Button.Content visible>
                           <Icon name='remove' />
                         </Button.Content>

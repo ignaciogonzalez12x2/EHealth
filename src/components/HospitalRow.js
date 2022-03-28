@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
 import notification from '../ethereum/notification';
+import web3 from '../ethereum/web3';
+import factory from '../ethereum/factory';
 
 class HospitalRow extends Component {
   state = {
@@ -59,34 +61,23 @@ class HospitalRow extends Component {
     });*/
   };
 
-  onAccept = async (contractAddress) => {
+  onDelete = async () => {
 
     this.setState({ loading: true, errorMessage: '' });
-    
     try {
-      // Refresh
-      alert('Hospital accepted!');
-      this.setState({ state: 'accepted' });
+        const accounts = await web3.eth.getAccounts();
+        await factory.methods
+            .RemoveHospital(this.state.idHospital)
+            .send({ from: accounts[0]});
+        alert('Hospital delete !');
+        // Refresh, using withRouter
+        this.props.history.push('/');
     } catch (err) {
-      this.setState({ errorMessage: err.message });
+        this.setState({ errorMessage: err.message });
     } finally {
         this.setState({ loading: false });
     }
-  };
-
-  onFinish = async (contractAddress) => {
-
-    this.setState({ loading: true, errorMessage: '' });
-
-    try {
-      // Refresh
-      alert('Hospital finished!');
-      this.setState({ state: 'finished' });
-    } catch (err) {
-      this.setState({ errorMessage: err.message });
-    } finally {
-        this.setState({ loading: false });
-    }
+    window.location.reload(true);
   };
 
   render() {
@@ -108,12 +99,13 @@ class HospitalRow extends Component {
                         </Button.Content>
                     </Button>*/}
                     
-                      <Button animated='vertical' color='blue' onClick={() => this.onAccept(this.props.idHospital)} disabled={this.state.state!=='created'} loading={this.state.loading}>
-                        <Button.Content hidden>Accept</Button.Content>
+                   
+                      <Button animated='vertical' color='blue' onClick={this.onDelete}>
+                        <Button.Content hidden>Delete</Button.Content>
                         <Button.Content visible>
                           <Icon name='remove' />
                         </Button.Content>
-                    </Button>
+                      </Button>
                     
                   
                   <Link to={"/hospitals/"+this.props.hospital[0]}>
