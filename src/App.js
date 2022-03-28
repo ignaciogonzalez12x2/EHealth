@@ -24,6 +24,7 @@ class App extends Component {
                         <Route exact path='/doctor/new' component={DoctorNew}/>
                         <Route exact path='/sensor/new' component={SensorNew}/>
                         <Route exact path='/hospitals/:address' component={HospitalShow}/>
+                        <Route exact path='/doctors/:address' component={DoctorShow}/>
                         <Route exact path='/doctors/' component={HomeDoctor}/>
                         <Route exact path='/sensors/' component={HomeSensor}/>
                     </Switch>

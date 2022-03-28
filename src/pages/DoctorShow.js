@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withRouter, Link } from "react-router-dom";
 import { Form, Button, Message, Input, Dimmer, Loader } from 'semantic-ui-react';
+import factory from '../ethereum/factory';
 import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 
@@ -20,17 +21,18 @@ class DoctorShow extends Component {
 
     try {
       let address = this.props.match.params.address;
-      let doctorContract = notification(address);
-      let idDoctor = await web3.eth.getBalance(address);
-      let name = await doctorContract.methods.nameDoctor.call();
-      let hospital = await doctorContract.methods.hospital.call();
-      let permission = await doctorContract.methods.permission.call();
-     
+      let doctorContract =  await factory.methods.ReadDoctor(address).call();
+
+      let idDoctor = address;
+      let nameDoctor = doctorContract[0];
+      let hospital = doctorContract[1];
+      let permission = doctorContract[2];
+
       this.setState({ 
         idDoctor: idDoctor,
-        name: name,
+        nameDoctor: nameDoctor,
         hospital: hospital,
-        permission: permission,
+        permission: permission
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -46,6 +48,31 @@ class DoctorShow extends Component {
     this.props.history.push('/');
   };
 
+
+  onSubmit = async event => {
+    event.preventDefault();
+
+    this.setState({ loading: true, errorMessage: '' });
+    try {
+        const accounts = await web3.eth.getAccounts();
+        await factory.methods
+            .UpdateDoctor(this.state.idDoctor,
+              this.state.nameDoctor,
+              this.state.hospital, 
+              this.state.permission)
+            .send({ from: accounts[0]});
+        alert('Doctor update !');
+        // Refresh, using withRouter
+        this.props.history.push('/');
+    } catch (err) {
+        this.setState({ errorMessage: err.message });
+    } finally {
+        this.setState({ loading: false });
+    }
+
+  };
+
+
   render() {
     return (
       <div>
@@ -53,43 +80,41 @@ class DoctorShow extends Component {
           <Loader inverted content='Loading...'></Loader>
         </Dimmer>
         <Link to='/'>Back</Link>
-        <h3>Show Doctor</h3>
+        <h3>Hospital ID</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
-            <label>Address of Hospital</label>
+            <label>Doctor ID</label>
             <Input
-              readOnly
-              value={this.state.idDoctor}
+              value={this.state.idDoctor} 
             />
           </Form.Field>
 
           <Form.Field>
             <label>Name</label>
             <Input
-              readOnly
-              value={this.state.name}
+              value={this.state.nameDoctor}  
+              onChange={event => this.setState({ nameDoctor: event.target.value })}
             />
           </Form.Field>
 
           <Form.Field>
             <label>Hospital</label>
             <Input
-              readOnly
-              value={this.state.hospital}
+              value={this.state.hospital}  
+              onChange={event => this.setState({ hospital: event.target.value })}
             />
           </Form.Field>
-
           <Form.Field>
             <label>Permission</label>
             <Input
-              readOnly
-              value={this.state.permission}
+              value={this.state.permission}  
+              onChange={event => this.setState({ permission: event.target.value })}
             />
           </Form.Field>
 
           <Message error header="ERROR" content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
-            Close
+            Update ! 
           </Button>
         </Form>
       </div>

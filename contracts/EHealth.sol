@@ -55,7 +55,7 @@ contract EHealth {
     event RefreshHospital(address,string,string,string,uint,bool);
     event NewDoctor(address, string, address, bool);
     event DeleteDoctor(address, string, address, bool);
-    event RefreshDoctor(address, string, address);
+    event RefreshDoctor(address, string, address,bool);
     event NewSensor(uint,string,string,address,bool);
     event DeleteSensor(uint,string,string,address,bool);
     event RefreshSensor(uint,string,string,address);
@@ -160,13 +160,15 @@ contract EHealth {
     }
 
     // Update doctor data
-    function UpdateDoctor(address _id, string memory _nameDoctor, address _hospital ) public {
+    function UpdateDoctor(address _id, string memory _nameDoctor, address _hospital ,bool _permission) public {
         uint index = FindDoctor(_id);
         doctorsHospital[index].nameDoctor=_nameDoctor;
         doctorsHospital[index].hospital=_hospital;
+        doctorsHospital[index].permission=_permission;
         emit RefreshDoctor(doctorsHospital[index].idDoctor,
         doctorsHospital[index].nameDoctor,
-        doctorsHospital[index].hospital
+        doctorsHospital[index].hospital,
+        doctorsHospital[index].permission
         );
     }
 

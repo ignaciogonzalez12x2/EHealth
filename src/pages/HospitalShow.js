@@ -97,7 +97,7 @@ class HospitalShow extends Component {
         <h3>Hospital ID</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
-            <label>Address of Hospital</label>
+            <label>Hospital ID</label>
             <Input
               value={this.state.idHospital} 
             />
