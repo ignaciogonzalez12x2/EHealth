@@ -38,6 +38,7 @@
   "private": true,
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.2.1",
+    "chart.js": "^3.7.1",
     "chokidar": "^2.1.8",
     "fs-extra": "^9.1.0",
     "ganache-cli": "^6.12.2",
@@ -47,6 +48,7 @@
     "nvm": "^0.0.4",
     "pify": "^5.0.0",
     "react": "^16.13.1",
+    "react-chartjs-2": "^4.0.1",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.4",

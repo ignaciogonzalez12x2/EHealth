@@ -45,6 +45,7 @@ contract EHealth {
         string patientName;
         address idDoctor;
         bool active;
+        uint[] data;
     }
     // Types of sensors
     Sensor[] public sensorsDoctor;
@@ -56,7 +57,7 @@ contract EHealth {
     event NewDoctor(address, string, address, bool);
     event DeleteDoctor(address, string, address, bool);
     event RefreshDoctor(address, string, address,bool);
-    event NewSensor(uint,string,string,address,bool);
+    event NewSensor(uint,string,string,address,bool, uint[]);
     event DeleteSensor(uint,string,string,address,bool);
     event RefreshSensor(uint,string,string,address,bool);
 
@@ -208,8 +209,9 @@ contract EHealth {
     // Add new sensor in the system 
     function AddSensor(string memory _mac, string memory _patientName, address _idDoctor, bool _active) public {
         FindDoctor(_idDoctor);
-        sensorsDoctor.push(Sensor(nextIdSensor,_mac, _patientName, _idDoctor, _active));
-        emit NewSensor(nextIdSensor,_mac, _patientName, _idDoctor, _active);
+        uint[] memory _data;
+        sensorsDoctor.push(Sensor(nextIdSensor,_mac, _patientName, _idDoctor, _active, _data));
+        emit NewSensor(nextIdSensor,_mac, _patientName, _idDoctor, _active, _data);
         nextIdSensor++;
     }
 
@@ -278,4 +280,17 @@ contract EHealth {
         }
         return ret;
     }
+
+    // Sensor sending data
+    function sendData(uint _idSensor, uint[] memory _data) public{
+        uint index = FindSensor(_idSensor);
+        sensorsDoctor[index].data=_data;
+    }
+
+    // View data for sensor
+    function viewSensorData(uint _idSensor) public view returns(uint[] memory){
+        uint index = FindSensor(_idSensor);
+        return sensorsDoctor[index].data;
+    } 
+
 }

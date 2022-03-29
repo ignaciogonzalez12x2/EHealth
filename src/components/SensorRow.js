@@ -12,6 +12,7 @@ class SensorRow extends Component {
     patientName: '',
     idDoctor: '',
     active: false,
+    data: '',
     loading: false,
     errorMessage: ''
   };
@@ -57,6 +58,30 @@ class SensorRow extends Component {
 
   onSend = async () => {
 
+    this.setState({ loading: true, errorMessage: '' });
+    try {
+
+      const min = 60;
+      const max = 100;
+      let init = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      let data = init.map((ini)=> parseInt(ini + (min + Math.random() * (max - min))));
+
+      console.log(data);
+      this.setState({ 
+        data: data
+      });
+      const accounts = await web3.eth.getAccounts();
+      await factory.methods
+            .sendData(this.state.idSensor, this.state.data)
+            .send({ from: accounts[0]});
+        alert('Sensor sending data !');
+        // Refresh, using withRouter
+        // this.props.history.push('/');
+    } catch (err) {
+        this.setState({ errorMessage: err.message });
+    } finally {
+        this.setState({ loading: false });
+    }
   };
 
 
@@ -86,7 +111,15 @@ class SensorRow extends Component {
 
                   <Link to={"/sensors/"+this.props.sensor.idSensor}>
                     <Button animated='vertical' color='blue' onClick={this.onView}>
-                      <Button.Content hidden>View</Button.Content>
+                      <Button.Content hidden>Params</Button.Content>
+                      <Button.Content visible>
+                        <Icon name='eye' />
+                      </Button.Content>
+                    </Button>
+                  </Link>
+                  <Link to={"/sensors/data/"+this.props.sensor.idSensor}>
+                    <Button animated='vertical' color='blue' onClick={this.onView}>
+                      <Button.Content hidden>Data</Button.Content>
                       <Button.Content visible>
                         <Icon name='eye' />
                       </Button.Content>
