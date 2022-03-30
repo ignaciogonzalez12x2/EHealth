@@ -194,7 +194,6 @@ export const options = {
   };
 const id=matchPath(window.location.hash, {path: "#/sensors/data/:id"});
 const labels = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'];
-const info = factory.methods.viewSensorData(id.params.id).call();
 export const datas = {
     id,
     labels,
@@ -202,7 +201,7 @@ export const datas = {
         {
           label: 'Cardiac Rhythm of patient',
           //data: ['67','68','97','77','100','67','67','67','67','68','97','77','100','67','67','67','99','99','99','99'],
-          data: id==null ? 0 : info,
+          data: id==null ? 0 : factory.methods.viewSensorData(id.params.id).call(),
           borderColor: 'rgb(255, 99, 132)',
           backgroundColor: 'rgba(255, 99, 132, 0.5)',
         },
