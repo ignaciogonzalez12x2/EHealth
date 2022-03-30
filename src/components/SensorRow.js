@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
-import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 
@@ -60,13 +59,10 @@ class SensorRow extends Component {
 
     this.setState({ loading: true, errorMessage: '' });
     try {
-
       const min = 60;
       const max = 100;
       let init = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
       let data = init.map((ini)=> parseInt(ini + (min + Math.random() * (max - min))));
-
-      console.log(data);
       this.setState({ 
         data: data
       });

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Icon, Button, Dimmer, Loader, Segment, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import factory from '../ethereum/factory';
-import HospitalRow from '../components/HospitalRow';
+import DoctorRow from '../components/DoctorRow';
 
-class Home extends Component {
+class DoctorsAtHospital extends Component {
     state = {
-        hospitalList: '',
-        hospitalCount: '',
+        doctorList: '',
+        doctorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,25 +15,32 @@ class Home extends Component {
 
     componentDidMount = async () => {
         try {
-            const hospitalCount = await factory.methods.Length_Hospitals().call();
-            const hospitalList = await factory.methods.getAllHospitals().call();
+            const doctorCount = await factory.methods.Length_Doctors().call();
+            //const doctorList = await factory.methods.getAllDoctors().call();
+            const id = this.props.match.params.address;
+            
+            const doctorList = await factory.methods.getAllDoctorsInHospital(id).call();
+           
+            //const hospitalContract = await factory.methods.ReadHospital(id).call();
+            //const doctorContract =  await factory.methods.getAllDoctorsInHospital(id).call();
             this.setState({ 
-                hospitalList: hospitalList,
-                hospitalCount: hospitalCount,
+                doctorList: doctorList,
+                doctorCount: doctorCount,
             });
         } finally {
             this.setState({ loadingPage: false })
         }
     }
 
-    renderHospitalRows() {
-        let hospitalCenters = this.state.hospitalList;
-        return hospitalCenters.map((hospital, index) => {
+    renderDoctorRows() {
+        let doctorsHospital = this.state.doctorList;
+        let doctorFilter = doctorsHospital.filter( doctor => doctor.idDoctor != 0x0000000000000000000000000000000000000000);
+        return doctorFilter.map((doctor, index) => {
             return (
-                <HospitalRow
+                <DoctorRow
                     key={index}
                     index={index}
-                    hospital={hospital}
+                    doctor={doctor}
                 />
             );
         });
@@ -54,19 +61,17 @@ class Home extends Component {
         // Done
         return (
             <div>
-                <h3><Icon name='sign out alternate' circular />&nbsp;Actives Hospitals</h3>
+                <h3><Icon name='sign out alternate' circular />&nbsp;Actives Doctors</h3>
                 <Table fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Hospital ID</Table.HeaderCell>
-                            <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>City</Table.HeaderCell>
-                            <Table.HeaderCell>State</Table.HeaderCell>
-                            <Table.HeaderCell>Postal Code</Table.HeaderCell>
+                            <Table.HeaderCell>Doctor ID </Table.HeaderCell>
+                            <Table.HeaderCell>Doctor Name</Table.HeaderCell>
+                            <Table.HeaderCell>Hospital</Table.HeaderCell>
                             <Table.HeaderCell>Permission</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>{this.renderHospitalRows()}</Table.Body>
+                    <Table.Body>{this.renderDoctorRows()}</Table.Body>
                 </Table>
                 <Link to="/hospital/new">
                     <Button
@@ -94,4 +99,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default DoctorsAtHospital;

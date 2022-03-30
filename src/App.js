@@ -13,7 +13,8 @@ import HomeDoctor from './pages/HomeDoctor';
 import HomeSensor from './pages/HomeSensor';
 import SensorShow from './pages/SensorShow';
 import SensorDataShow from './pages/SensorDataShow';
-
+import DoctorsAtHospital from './pages/DoctorsAtHospital';
+import SensorsOfDoctors from './pages/SensorsOfDoctors';
 
 class App extends Component {
     render() {
@@ -25,6 +26,8 @@ class App extends Component {
                         <Route exact path='/' component={Home}/>
                         <Route exact path='/doctors/' component={HomeDoctor}/>
                         <Route exact path='/sensors/' component={HomeSensor}/>
+                        <Route exact path='/hospital/:address/doctors' component={DoctorsAtHospital}/>
+                        <Route exact path='/doctor/:address/sensors' component={SensorsOfDoctors}/>
                         <Route exact path='/hospital/new' component={HospitalNew}/>
                         <Route exact path='/doctor/new' component={DoctorNew}/>
                         <Route exact path='/sensor/new' component={SensorNew}/>

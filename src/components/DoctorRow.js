@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
-import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 
@@ -64,6 +63,15 @@ class DoctorRow extends Component {
               <Table.Cell>{this.state.permission.toString()}</Table.Cell>
               <Table.Cell>
                 
+              <Link to={"/doctor/"+this.props.doctor.idDoctor+"/sensors"}>
+                      <Button animated='vertical' color='blue' onClick={this.onView}>
+                        <Button.Content hidden>Sensors</Button.Content>
+                        <Button.Content visible>
+                          <Icon name='eye' />
+                        </Button.Content>
+                      </Button>
+                    </Link>
+
                       <Button animated='vertical' color='blue' onClick={this.onDelete} >
                         <Button.Content hidden>Delete</Button.Content>
                         <Button.Content visible>

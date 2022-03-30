@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { withRouter, Link } from "react-router-dom";
 import { Form, Button, Message, Input, Dimmer, Loader } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
-import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 
 class DoctorShow extends Component {
@@ -80,7 +79,7 @@ class DoctorShow extends Component {
           <Loader inverted content='Loading...'></Loader>
         </Dimmer>
         <Link to='/'>Back</Link>
-        <h3>Hospital ID</h3>
+        <h3>Doctor ID</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
             <label>Doctor ID</label>

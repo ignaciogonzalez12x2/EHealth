@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Icon, Button, Dimmer, Loader, Segment, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import factory from '../ethereum/factory';
-import web3 from '../ethereum/web3';
 import DoctorRow from '../components/DoctorRow';
 
 class HomeDoctor extends Component {
@@ -16,7 +15,6 @@ class HomeDoctor extends Component {
 
     componentDidMount = async () => {
         try {
-            const accounts = await web3.eth.getAccounts();
             const doctorCount = await factory.methods.Length_Doctors().call();
             const doctorList = await factory.methods.getAllDoctors().call();
             this.setState({ 

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Icon, Button, Dimmer, Loader, Segment, Table } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import factory from '../ethereum/factory';
-import HospitalRow from '../components/HospitalRow';
+import SensorRow from '../components/SensorRow';
 
-class Home extends Component {
+class SensorsOfDoctor extends Component {
     state = {
-        hospitalList: '',
-        hospitalCount: '',
+        sensorList: '',
+        sensorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,25 +15,27 @@ class Home extends Component {
 
     componentDidMount = async () => {
         try {
-            const hospitalCount = await factory.methods.Length_Hospitals().call();
-            const hospitalList = await factory.methods.getAllHospitals().call();
+            const id = this.props.match.params.address;
+            const sensorCount = await factory.methods.Length_sensors().call();
+            const sensorList = await factory.methods.getAllSensorOfDoctor(id).call();
             this.setState({ 
-                hospitalList: hospitalList,
-                hospitalCount: hospitalCount,
+                sensorList: sensorList,
+                sensorCount: sensorCount,
             });
         } finally {
             this.setState({ loadingPage: false })
         }
     }
 
-    renderHospitalRows() {
-        let hospitalCenters = this.state.hospitalList;
-        return hospitalCenters.map((hospital, index) => {
+    renderSensorRows() {
+        let sensorsDoctor = this.state.sensorList;
+        let sensorFilter = sensorsDoctor.filter( sensor => sensor.idDoctor != 0x0000000000000000000000000000000000000000);
+        return sensorFilter.map((sensor, index) => {
             return (
-                <HospitalRow
+                <SensorRow
                     key={index}
                     index={index}
-                    hospital={hospital}
+                    sensor={sensor}
                 />
             );
         });
@@ -54,19 +56,18 @@ class Home extends Component {
         // Done
         return (
             <div>
-                <h3><Icon name='sign out alternate' circular />&nbsp;Actives Hospitals</h3>
+                <h3><Icon name='sign out alternate' circular />&nbsp;Actives Sensors</h3>
                 <Table fixed>
                     <Table.Header>
                         <Table.Row>
-                            <Table.HeaderCell>Hospital ID</Table.HeaderCell>
-                            <Table.HeaderCell>Name</Table.HeaderCell>
-                            <Table.HeaderCell>City</Table.HeaderCell>
-                            <Table.HeaderCell>State</Table.HeaderCell>
-                            <Table.HeaderCell>Postal Code</Table.HeaderCell>
-                            <Table.HeaderCell>Permission</Table.HeaderCell>
+                            <Table.HeaderCell>Sensor ID </Table.HeaderCell>
+                            <Table.HeaderCell>MAC</Table.HeaderCell>
+                            <Table.HeaderCell>Patient Name</Table.HeaderCell>
+                            <Table.HeaderCell>Doctor ID</Table.HeaderCell>
+                            <Table.HeaderCell>Active</Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
-                    <Table.Body>{this.renderHospitalRows()}</Table.Body>
+                    <Table.Body>{this.renderSensorRows()}</Table.Body>
                 </Table>
                 <Link to="/hospital/new">
                     <Button
@@ -94,4 +95,4 @@ class Home extends Component {
     }
 }
 
-export default Home;
+export default SensorsOfDoctor;

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
-import notification from '../ethereum/notification';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
 
@@ -18,23 +17,6 @@ class HospitalRow extends Component {
   };
 
   componentDidMount = async () => {
-    /*let hospitalContract = notification(this.props.hospital);
-    let hospital = await hospitalContract.methods.Hospitals(0).call();
-    let idHospital = await hospital.idHospital.call();
-    let name = await hospital.name.call();
-    let city = await hospital.city.call();
-    let state = await hospital.state.call();
-    let permission = await hospital.permission.call();*/
-
-
-    //const hospitalList = await factory.methods.getAllHospitals().call();
-    
-    /*let idHospital =  hospital.idHospital.call();
-    let name =  hospital.name.call();
-    let city =  hospital.city.call();
-    let state =  hospital.state.call();
-    let permission =  hospital.permission.call();*/
- 
 
     let idHospital = this.props.hospital.idHospital;
     let name = this.props.hospital.name;
@@ -91,13 +73,14 @@ class HospitalRow extends Component {
               <Table.Cell>{this.state.permission.toString()}</Table.Cell>
               <Table.Cell>
                   
-                    
-                      {/*<Button animated='vertical' color='blue' onClick={() => this.onFinish(this.props.idHospital)} disabled={this.state.state!=='accepted'} loading={this.state.loading}>
-                        <Button.Content hidden>Finish</Button.Content>
+                    <Link to={"/hospital/"+this.props.hospital.idHospital+"/doctors"}>
+                      <Button animated='vertical' color='blue' onClick={this.onView}>
+                        <Button.Content hidden>Doctors</Button.Content>
                         <Button.Content visible>
-                          <Icon name='send' />
+                          <Icon name='eye' />
                         </Button.Content>
-                    </Button>*/}
+                      </Button>
+                    </Link>
                     
                    
                       <Button animated='vertical' color='blue' onClick={this.onDelete}>
