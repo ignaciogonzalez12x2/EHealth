@@ -86,7 +86,7 @@ class SensorShow extends Component {
           <Form.Field>
             <label>Sensor ID</label>
             <Input
-              value={this.state.idDoctor} 
+              value={this.state.idSensor} 
             />
           </Form.Field>
 

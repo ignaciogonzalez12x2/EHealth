@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { withRouter, Link } from "react-router-dom";
 import { Form, Message, Input, Dimmer, Loader } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
-import { matchPath } from 'react-router'
-
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -15,7 +13,7 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-
+//import { matchPath } from 'react-router';
 
 ChartJS.register(
     CategoryScale,
@@ -35,7 +33,8 @@ class SensorDataShow extends Component {
     idDoctor: '',
     permission: false,
     data: '',
-    options:'',
+    datas: '',
+    options: '',
     loading: false,
     errorMessage: ''
   };
@@ -52,14 +51,19 @@ class SensorDataShow extends Component {
       let patientName = sensorContract[1];
       let idDoctor = sensorContract[2];
       let active = sensorContract[3];
-
+      this.state.data = data;
+      let datas = this.onData();
+      this.state.datas = datas;
+      let options= this.onOptions();
+      this.state.options = options;
       this.setState({ 
         idSensor: idSensor,
         MAC: MAC,
         patientName: patientName,
         idDoctor: idDoctor,
         active: active,
-        data: data
+        data: data,
+        options: options
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -68,69 +72,42 @@ class SensorDataShow extends Component {
     }
   }
 
-  onSubmit = async () => {
-   /* event.preventDefault();
+  onData(){ 
+    //const id=matchPath(window.location.hash, {path: "#/sensors/data/:id"});
+    const labels = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'];
 
-    // Refresh, using withRouter
-    this.props.history.push('/');*/
-  };
-
-
-  onSubmit = async () => {
-  /*  event.preventDefault();
-
-    this.setState({ loading: true, errorMessage: '' });
-    try {
-        const accounts = await web3.eth.getAccounts();
-        await factory.methods
-            .UpdateSensor(this.state.idSensor,
-              this.state.MAC,
-              this.state.patientName, 
-              this.state.idDoctor,
-              this.state.active)
-            .send({ from: accounts[0]});
-        alert('Sensor update !');
-        // Refresh, using withRouter
-        this.props.history.push('/');
-    } catch (err) {
-        this.setState({ errorMessage: err.message });
-    } finally {
-        this.setState({ loading: false });
-    }*/
-
-  };
-
- /* getOptions = async () =>{
     return ({
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Graphic Cardiac Rhythm',
-          },
-        },
-      }
-    );
-     
-  }
-
-  getData = async () =>{
-    return ({
-        datasets: [
+ //     id,
+      labels,
+      datasets: [
           {
-            label: 'Cardiac Rhythm of patient',
-            data: this.state.data,
-            borderColor: 'rgb(255, 99, 132)',
-            backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              label: 'Cardiac Rhythm of patient',
+              //data: ['67','68','97','77','100','67','67','67','67','68','97','77','100','67','67','67','99','99','99','99'],
+              data:  this.state.data === "" ? "" : this.state.data,
+              borderColor: 'rgb(255, 99, 132)',
+              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              },
+          ],
+      });
+
+
+
+  }
+  onOptions(){
+    return ({
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+            title: {
+              display: true,
+              text: 'Graphic Cardiac Rhythm',
+            },
           },
-        ],
-      }
-    );
-  }*/
- 
+        });
+
+}
 
   render() {
     return (
@@ -144,17 +121,15 @@ class SensorDataShow extends Component {
           <Form.Field>
             <label>Sensor ID</label>
             <Input
-              value={this.state.idDoctor} 
+              value={this.state.idSensor} 
             />
           </Form.Field>
-
           <Form.Field>
             <label>MAC</label>
             <Input
               value={this.state.MAC}  
             />
           </Form.Field>
-
           <Form.Field>
             <label>Patient Name</label>
             <Input
@@ -173,38 +148,12 @@ class SensorDataShow extends Component {
               value={this.state.active}  
             />
           </Form.Field>
-          <Line options={options} data={datas}/>
+          <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
           <Message error header="ERROR" content={this.state.errorMessage} />
         </Form>
       </div>
     );
   }
 }
-export const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: 'top',
-      },
-      title: {
-        display: true,
-        text: 'Graphic Cardiac Rhythm',
-      },
-    },
-  };
-const id=matchPath(window.location.hash, {path: "#/sensors/data/:id"});
-const labels = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'];
-export const datas = {
-    id,
-    labels,
-    datasets: [
-        {
-          label: 'Cardiac Rhythm of patient',
-          //data: ['67','68','97','77','100','67','67','67','67','68','97','77','100','67','67','67','99','99','99','99'],
-          data: id==null ? 0 : factory.methods.viewSensorData(id.params.id).call(),
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
-        },
-      ],
-};
+
 export default withRouter(SensorDataShow);
