@@ -75,26 +75,42 @@ class SensorDataShow extends Component {
   onData(){ 
     //const id=matchPath(window.location.hash, {path: "#/sensors/data/:id"});
     const labels = ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20'];
+    let dat = {
+      //     id,
+           labels,
+           datasets: [
+               {
+                   label: 'Cardiac Rhythm of patient',
+                   //data: ['67','68','97','77','100','67','67','67','67','68','97','77','100','67','67','67','99','99','99','99'],
+                   data:  this.state.data === "" ? "" : this.state.data,
+                   borderColor: 'rgb(255, 99, 132)',
+                   backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                   },
+               ],
+           }
 
-    return ({
- //     id,
-      labels,
-      datasets: [
-          {
-              label: 'Cardiac Rhythm of patient',
-              //data: ['67','68','97','77','100','67','67','67','67','68','97','77','100','67','67','67','99','99','99','99'],
-              data:  this.state.data === "" ? "" : this.state.data,
-              borderColor: 'rgb(255, 99, 132)',
-              backgroundColor: 'rgba(255, 99, 132, 0.5)',
-              },
-          ],
-      });
+
+
+    return (dat);
 
 
 
   }
   onOptions(){
-    return ({
+    let option = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'top',
+        },
+        title: {
+          display: true,
+          text: 'Graphic Cardiac Rhythm',
+        },
+      },
+    };
+    return (option);
+      /*{
           responsive: true,
           plugins: {
             legend: {
@@ -105,7 +121,7 @@ class SensorDataShow extends Component {
               text: 'Graphic Cardiac Rhythm',
             },
           },
-        });
+        }*/
 
 }
 
@@ -116,7 +132,7 @@ class SensorDataShow extends Component {
           <Loader inverted content='Loading...'></Loader>
         </Dimmer>
         <Link to='/'>Back</Link>
-        <h3>Sensor ID</h3>
+        <h3>Patient Data</h3>
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage} hidden={this.state.loading}>
           <Form.Field>
             <label>Sensor ID</label>
@@ -148,7 +164,7 @@ class SensorDataShow extends Component {
               value={this.state.active}  
             />
           </Form.Field>
-          <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
+          <Line options={this.onOptions()} data={this.onData()}/>
           <Message error header="ERROR" content={this.state.errorMessage} />
         </Form>
       </div>
@@ -157,3 +173,8 @@ class SensorDataShow extends Component {
 }
 
 export default withRouter(SensorDataShow);
+/**
+ * <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
+ *  <Line options={this.state.options} data={this.state.datas }/>
+ * 
+ */
