@@ -68,3 +68,4 @@ typings/
 .env.production.local
 
 package-lock.json
+deploy.js

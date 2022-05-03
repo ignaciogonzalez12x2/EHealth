@@ -22,6 +22,7 @@ const deploy = async () => {
   const result = await new web3.eth.Contract(compiledContract.abi)
     .deploy({ data: compiledContract.evm.bytecode.object, arguments: [] })
     .send({ from: accounts[0], gas: '6000000' });
+    .send({ from: accounts[0], gas: '6000000000' });
 
   // fs.writeFileSync('./CONTRACTADDRESS', result.options.address);
   compiledContract.address = result.options.address;

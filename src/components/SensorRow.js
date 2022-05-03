@@ -59,10 +59,17 @@ class SensorRow extends Component {
 
     this.setState({ loading: true, errorMessage: '' });
     try {
-      const min = 60;
-      const max = 100;
-      let init = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-      let data = init.map((ini)=> parseInt(ini + (min + Math.random() * (max - min))));
+      const min = 0;
+      const max = 200;
+      let val = 0;
+      let data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      for (let i = 0; i < data.length; i++){
+          do{
+            val = parseInt((min + ((Math.random() * (max - min)))));
+          }while(val > 60 && val < 100);
+          data[i] = data [i]+val;
+      }
+      //let data = init.map((ini)=> parseInt((min + ((Math.random() * (max - min))) > 60 && ((Math.random() * (max - min))) < 100) ? (Math.random() * (max - min)) : ini + (min + ((Math.random() * (max - min))))));
       this.setState({ 
         data: data
       });

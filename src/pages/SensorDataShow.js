@@ -174,7 +174,7 @@ class SensorDataShow extends Component {
 
 export default withRouter(SensorDataShow);
 /**
- * <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
+ *  <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
  *  <Line options={this.state.options} data={this.state.datas }/>
- * 
+ *  <Line options={this.onOptions()} data={this.onData()}/>
  */

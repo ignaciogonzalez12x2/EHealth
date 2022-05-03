@@ -29,8 +29,7 @@
         }
       ],
       "name": "DeleteDoctor",
-      "type": "event",
-      "signature": "0x780b3c74ec1e08d8c65fd8a12c6ac2da5c15f2d3b5e54335b51671f63b7d2ad0"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -73,8 +72,7 @@
         }
       ],
       "name": "DeleteHospital",
-      "type": "event",
-      "signature": "0x05818f5e23a2c2bb34c81792ea8e3397d3f8ad179cb93a5fa57b3d4681564aa0"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -111,8 +109,7 @@
         }
       ],
       "name": "DeleteSensor",
-      "type": "event",
-      "signature": "0xef9006907eb20210e880b0bb1c39946083bcec24688718507d63a259ffa8351b"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -143,8 +140,7 @@
         }
       ],
       "name": "NewDoctor",
-      "type": "event",
-      "signature": "0x4578695497af1a3a1f556f9c89f9f107851cb8e1820e4b336143406b9ba52e3b"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -187,8 +183,7 @@
         }
       ],
       "name": "NewHospital",
-      "type": "event",
-      "signature": "0xf646212acc3f5092fb0211ffd5121c0f706641b715e3982dab50afb395413dd5"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -231,8 +226,7 @@
         }
       ],
       "name": "NewSensor",
-      "type": "event",
-      "signature": "0x23f4ceea50d8ef88465d5bb07ab2960540f3c2414851cf0a137f2ee3a4ab6fa8"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -263,8 +257,7 @@
         }
       ],
       "name": "RefreshDoctor",
-      "type": "event",
-      "signature": "0x6fcbc4a02269ac36204ac7e60c4cf625c6fc2b2365cac750c9927b670e347f90"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -307,8 +300,7 @@
         }
       ],
       "name": "RefreshHospital",
-      "type": "event",
-      "signature": "0x5975e6fed8802a324436eb320387035d99d011c9901bb75b34b8c23b91250c1c"
+      "type": "event"
     },
     {
       "anonymous": false,
@@ -345,8 +337,7 @@
         }
       ],
       "name": "RefreshSensor",
-      "type": "event",
-      "signature": "0x3ab6f9ea2e72cad17988f4527dc5626fa4e97c597fcbd9d7e2a7e820851b54ce"
+      "type": "event"
     },
     {
       "inputs": [
@@ -369,8 +360,7 @@
       "name": "AddDoctor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0xe1ee3b56"
+      "type": "function"
     },
     {
       "inputs": [
@@ -403,8 +393,7 @@
       "name": "AddHospital",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0xa27876c5"
+      "type": "function"
     },
     {
       "inputs": [
@@ -432,8 +421,7 @@
       "name": "AddSensor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x1b057e40"
+      "type": "function"
     },
     {
       "inputs": [
@@ -467,9 +455,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xdc7aa36b"
+      "type": "function"
     },
     {
       "inputs": [
@@ -513,9 +499,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xa549a4ed"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -528,9 +512,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x1ba51696"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -543,9 +525,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xa17d7a38"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -558,9 +538,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xb5843613"
+      "type": "function"
     },
     {
       "inputs": [
@@ -589,9 +567,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x6cd8ebdc"
+      "type": "function"
     },
     {
       "inputs": [
@@ -630,9 +606,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x9b70e779"
+      "type": "function"
     },
     {
       "inputs": [
@@ -666,9 +640,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x02655c2e"
+      "type": "function"
     },
     {
       "inputs": [
@@ -681,8 +653,7 @@
       "name": "RemoveDoctor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0xa0568e2d"
+      "type": "function"
     },
     {
       "inputs": [
@@ -695,8 +666,7 @@
       "name": "RemoveHospital",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x4807fc69"
+      "type": "function"
     },
     {
       "inputs": [
@@ -709,8 +679,7 @@
       "name": "RemoveSensor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x6151efb1"
+      "type": "function"
     },
     {
       "inputs": [
@@ -749,9 +718,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x898bd140"
+      "type": "function"
     },
     {
       "inputs": [
@@ -779,8 +746,7 @@
       "name": "UpdateDoctor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x60ea3cdc"
+      "type": "function"
     },
     {
       "inputs": [
@@ -818,8 +784,7 @@
       "name": "UpdateHospital",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x7fe53f83"
+      "type": "function"
     },
     {
       "inputs": [
@@ -852,8 +817,7 @@
       "name": "UpdateSensor",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x6f39507d"
+      "type": "function"
     },
     {
       "inputs": [
@@ -887,9 +851,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x8db2fc41"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -924,9 +886,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xf0d95090"
+      "type": "function"
     },
     {
       "inputs": [
@@ -967,9 +927,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xc266406d"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -1014,9 +972,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x4e9f7154"
+      "type": "function"
     },
     {
       "inputs": [
@@ -1067,9 +1023,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x9a2e5bed"
+      "type": "function"
     },
     {
       "inputs": [],
@@ -1114,9 +1068,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0x5a4e5d3e"
+      "type": "function"
     },
     {
       "inputs": [
@@ -1160,9 +1112,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xd53d0a85"
+      "type": "function"
     },
     {
       "inputs": [
@@ -1180,8 +1130,7 @@
       "name": "sendData",
       "outputs": [],
       "stateMutability": "nonpayable",
-      "type": "function",
-      "signature": "0x4444cc92"
+      "type": "function"
     },
     {
       "inputs": [
@@ -1220,9 +1169,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xea87659f"
+      "type": "function"
     },
     {
       "inputs": [
@@ -1241,9 +1188,7 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function",
-      "constant": true,
-      "signature": "0xc3f4c25f"
+      "type": "function"
     }
   ],
   "devdoc": {
@@ -108183,6 +108128,5 @@
     "kind": "user",
     "methods": {},
     "version": 1
-  },
-  "address": "0x0cC64b1F333E2c5afFcc79367361d8C5Dc466477"
+  }
 }
