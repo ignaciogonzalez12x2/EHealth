@@ -1,101 +1,95 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
-import { Table, Button, Icon, Message } from 'semantic-ui-react';
-import web3 from '../ethereum/web3';
+import { Icon, Button, Dimmer, Loader, Segment, Table } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 import factory from '../ethereum/factory';
+import HospitalRow from '../components/HospitalRow';
 
-class HospitalRow extends Component {
-  state = {
-    idHospital: '',
-    name: '',
-    state: '',
-    postalCode: '',
-    permission: false,
-    loading: false,
-    errorMessage: ''
-  };
+class Home extends Component {
+    state = {
+        hospitalList: '',
+        //hospitalCount: '',
+        loadingPage: true,
+        loading: false,
+        errorMessage: ''
+    };
 
-  componentDidMount = async () => {
-
-    let idHospital = this.props.hospital.idHospital;
-    let name = this.props.hospital.name;
-    let state = this.props.hospital.state;
-    let postalCode = this.props.hospital.postalCode;
-    let permission = this.props.hospital.permission;
-
-    this.setState({ 
-      idHospital: idHospital,
-      name: name,
-      state: state,
-      postalCode: postalCode,
-      permission: permission,
-    });
-  }
-
-  onView = async () => {
-  };
-
-  onDelete = async () => {
-
-    this.setState({ loading: true, errorMessage: '' });
-    try {
-        const accounts = await web3.eth.getAccounts();
-        await factory.methods
-            .RemoveHospital(this.state.idHospital)
-            .send({ from: accounts[0]});
-        alert('Hospital delete !');
-        // Refresh, using withRouter
-        this.props.history.push('/');
-    } catch (err) {
-        this.setState({ errorMessage: err.message });
-    } finally {
-        this.setState({ loading: false });
+    componentDidMount = async () => {
+        try {
+            //const hospitalCount = await factory.methods.Length_Hospitals().call();
+            const hospitalList = await factory.methods.getAllHospitals().call();
+            this.setState({ 
+                hospitalList: hospitalList,
+                //hospitalCount: hospitalCount,
+            });
+        } finally {
+            this.setState({ loadingPage: false })
+        }
     }
-    window.location.reload(true);
-  };
 
-  render() {
-      return (
-          <Table.Row>
-              <Table.Cell>{this.state.idHospital}</Table.Cell>
-              <Table.Cell>{this.state.name}</Table.Cell>
-              <Table.Cell>{this.state.state}</Table.Cell>
-              <Table.Cell>{this.state.postalCode}</Table.Cell>
-              <Table.Cell>{this.state.permission.toString()}</Table.Cell>
-              <Table.Cell>
-                  
-                    <Link to={"/hospital/"+this.props.hospital.idHospital+"/doctors"}>
-                      <Button animated='vertical' color='blue' onClick={this.onView}>
-                        <Button.Content hidden>Doctors</Button.Content>
-                        <Button.Content visible>
-                          <Icon name='eye' />
-                        </Button.Content>
-                      </Button>
-                    </Link>
-                    
-                   
-                      <Button animated='vertical' color='blue' onClick={this.onDelete}>
-                        <Button.Content hidden>Delete</Button.Content>
-                        <Button.Content visible>
-                          <Icon name='remove' />
-                        </Button.Content>
-                      </Button>
-                    
-                  
-                  <Link to={"/hospitals/"+this.props.hospital[0]}>
-                    <Button animated='vertical' color='blue' onClick={this.onView}>
-                      <Button.Content hidden>View</Button.Content>
-                      <Button.Content visible>
-                        <Icon name='eye' />
-                      </Button.Content>
-                    </Button>
-                  </Link>
-                  <Message error header="ERROR" content={this.state.errorMessage} hidden={!this.state.errorMessage} />
-                </Table.Cell>
-          </Table.Row>
-          
-      );
+    renderHospitalRows() {
+        let hospitalCenters = this.state.hospitalList;
+        return hospitalCenters.map == undefined ? null : hospitalCenters.map((hospital, index) => {
+            return (
+                <HospitalRow
+                    key={index}
+                    index={index}
+                    hospital={hospital}
+                />
+            );
+        });
+    }
+
+    render() {
+        // Loading
+        if (this.state.loadingPage) return (
+            <div>
+                <Segment style={{ height: '80vh' }}>
+                    <Dimmer active inverted>
+                        <Loader inverted content='Loading...' />
+                    </Dimmer>
+                </Segment>
+            </div>
+        );
+        // Done
+        return (
+            <div>
+                <h3><Icon name='sign out alternate' circular />&nbsp;Hospitals</h3>
+                <Table fixed>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Hospital ID</Table.HeaderCell>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            <Table.HeaderCell>State</Table.HeaderCell>
+                            <Table.HeaderCell>Postal Code</Table.HeaderCell>
+                            <Table.HeaderCell>Permission</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>{this.renderHospitalRows()}</Table.Body>
+                </Table>
+                <Link to="/hospital/new">
+                    <Button
+                        content = "New Hospital"
+                        icon = "add circle"
+                        primary = {true}
+                        />
+                </Link>
+                <Link to="/doctor/new">
+                    <Button
+                        content = "New Doctor"
+                        icon = "add circle"
+                        primary = {true}
+                        />
+                </Link>
+                <Link to="/sensor/new">
+                    <Button
+                        content = "New Sensor"
+                        icon = "add circle"
+                        primary = {true}
+                        />
+                </Link>
+            </div>
+        );
     }
 }
 
-export default HospitalRow;
+export default Home;
