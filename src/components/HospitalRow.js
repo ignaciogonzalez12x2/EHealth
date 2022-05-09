@@ -8,7 +8,6 @@ class HospitalRow extends Component {
   state = {
     idHospital: '',
     name: '',
-    city: '',
     state: '',
     postalCode: '',
     permission: false,
@@ -20,7 +19,6 @@ class HospitalRow extends Component {
 
     let idHospital = this.props.hospital.idHospital;
     let name = this.props.hospital.name;
-    let city = this.props.hospital.city;
     let state = this.props.hospital.state;
     let postalCode = this.props.hospital.postalCode;
     let permission = this.props.hospital.permission;
@@ -28,7 +26,6 @@ class HospitalRow extends Component {
     this.setState({ 
       idHospital: idHospital,
       name: name,
-      city: city,
       state: state,
       postalCode: postalCode,
       permission: permission,
@@ -36,11 +33,6 @@ class HospitalRow extends Component {
   }
 
   onView = async () => {
-    /*const campaign = Campaign(this.props.address);
-
-    await campaign.methods.approveRequest(this.props.id).send({
-      from: accounts[0]
-    });*/
   };
 
   onDelete = async () => {
@@ -67,7 +59,6 @@ class HospitalRow extends Component {
           <Table.Row>
               <Table.Cell>{this.state.idHospital}</Table.Cell>
               <Table.Cell>{this.state.name}</Table.Cell>
-              <Table.Cell>{this.state.city}</Table.Cell>
               <Table.Cell>{this.state.state}</Table.Cell>
               <Table.Cell>{this.state.postalCode}</Table.Cell>
               <Table.Cell>{this.state.permission.toString()}</Table.Cell>
