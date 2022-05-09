@@ -8,7 +8,6 @@ class HospitalShow extends Component {
   state = {
     idHospital: '',
     name: '',
-    city: '',
     state: '',
     postalCode: '',
     permission: false,
@@ -23,27 +22,18 @@ class HospitalShow extends Component {
     try {
       let address = this.props.match.params.address;
       let hospitalContract =  await factory.methods.ReadHospital(address).call();
-
-      /*let deposit = await web3.eth.getBalance(address);
-      let sender = await hospitalContract.methods.sender().call();
-      let receiver = await hospitalContract.methods.receivers(0).call();
-      let message = await hospitalContract.methods.message().call();*/
       let idHospital = address;
       let name = hospitalContract[0];
-      let city = hospitalContract[1];
-      let state = hospitalContract[2];
-      let postalCode = hospitalContract[3];
-      let permission = hospitalContract[4];
+      let state = hospitalContract[1];
+      let postalCode = hospitalContract[2];
+      let permission = hospitalContract[3];
 
       this.setState({ 
         idHospital: idHospital,
         name: name,
-        city: city,
         state: state,
         postalCode: postalCode,
         permission: permission
-        //message: message,
-        //deposit: deposit
       });
     } catch (err) {
       this.setState({ errorMessage: err.message });
@@ -59,7 +49,6 @@ class HospitalShow extends Component {
     this.props.history.push('/');
   };
 
-
   onSubmit = async event => {
     event.preventDefault();
 
@@ -69,7 +58,6 @@ class HospitalShow extends Component {
         await factory.methods
             .UpdateHospital(this.state.idHospital,
               this.state.name,
-              this.state.city, 
               this.state.state, 
               this.state.postalCode,
               this.state.permission)
@@ -107,14 +95,6 @@ class HospitalShow extends Component {
             <Input
               value={this.state.name}  
               onChange={event => this.setState({ name: event.target.value })}
-            />
-          </Form.Field>
-
-          <Form.Field>
-            <label>City</label>
-            <Input
-              value={this.state.city}  
-              onChange={event => this.setState({ city: event.target.value })}
             />
           </Form.Field>
 
