@@ -49,7 +49,6 @@ class HospitalShow extends Component {
     this.props.history.push('/');
   };
 
-
   onSubmit = async event => {
     event.preventDefault();
 

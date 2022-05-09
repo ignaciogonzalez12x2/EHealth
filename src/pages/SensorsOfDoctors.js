@@ -14,7 +14,7 @@ class SensorsOfDoctor extends Component {
 
     componentDidMount = async () => {
         try {
-            const id = this.props.match.params.address;
+            const id = this.props.match.params.address;     
             const sensorList = await factory.methods.getAllSensorOfDoctor(id).call();
             this.setState({ 
                 sensorList: sensorList,

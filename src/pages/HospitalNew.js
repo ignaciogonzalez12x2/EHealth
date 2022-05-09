@@ -85,5 +85,4 @@ class HospitalNew extends Component {
     );
   }
 }
-
 export default withRouter(HospitalNew);

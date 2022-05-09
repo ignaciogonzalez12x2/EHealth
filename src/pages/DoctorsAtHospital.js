@@ -23,7 +23,6 @@ class DoctorsAtHospital extends Component {
             this.setState({ loadingPage: false })
         }
     }
-
     renderDoctorRows() {
         let doctorsHospital = this.state.doctorList;
         let doctorFilter = doctorsHospital.filter( doctor => doctor.idDoctor != 0x0000000000000000000000000000000000000000);

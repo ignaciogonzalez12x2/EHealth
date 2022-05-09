@@ -50,7 +50,6 @@ class Home extends Component {
                 </Segment>
             </div>
         );
-      
         // Done
         return (
             <div>

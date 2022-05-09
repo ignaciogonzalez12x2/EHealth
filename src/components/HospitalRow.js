@@ -33,11 +33,6 @@ class HospitalRow extends Component {
   }
 
   onView = async () => {
-    /*const campaign = Campaign(this.props.address);
-
-    await campaign.methods.approveRequest(this.props.id).send({
-      from: accounts[0]
-    });*/
   };
 
   onDelete = async () => {

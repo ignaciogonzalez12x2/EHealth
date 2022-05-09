@@ -7,7 +7,6 @@ import SensorRow from '../components/SensorRow';
 class HomeSensor extends Component {
     state = {
         sensorList: '',
-        //sensorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,11 +14,9 @@ class HomeSensor extends Component {
 
     componentDidMount = async () => {
         try {
-            //const sensorCount = await factory.methods.Length_sensors().call();
             const sensorList = await factory.methods.getAllSensors().call();
             this.setState({ 
                 sensorList: sensorList,
-                //sensorCount: sensorCount,
             });
         } finally {
             this.setState({ loadingPage: false })

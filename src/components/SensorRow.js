@@ -151,5 +151,4 @@ class SensorRow extends Component {
       );
     }
 }
-
 export default SensorRow;
