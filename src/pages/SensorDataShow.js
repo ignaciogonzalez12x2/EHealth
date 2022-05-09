@@ -46,7 +46,7 @@ class SensorDataShow extends Component {
     try {
       let idSensor = this.props.match.params.uint;
       let sensorContract =  await factory.methods.ReadSensor(idSensor).call();
-      let data = await factory.methods.viewSensorData(idSensor).call();
+      let data = await factory.methods.viewSensorData(idSensor,sensorContract[2]).call();
       let MAC = sensorContract[0];
       let patientName = sensorContract[1];
       let idDoctor = sensorContract[2];
@@ -171,10 +171,4 @@ class SensorDataShow extends Component {
     );
   }
 }
-
 export default withRouter(SensorDataShow);
-/**
- *  <Line options={(this.state.options === "") ? "" : this.state.options} data={(this.state.datas === "" ) ? "" : this.state.datas }/>
- *  <Line options={this.state.options} data={this.state.datas }/>
- *  <Line options={this.onOptions()} data={this.onData()}/>
- */
