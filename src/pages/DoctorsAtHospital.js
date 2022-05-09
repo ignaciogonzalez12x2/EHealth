@@ -7,7 +7,6 @@ import DoctorRow from '../components/DoctorRow';
 class DoctorsAtHospital extends Component {
     state = {
         doctorList: '',
-        doctorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,23 +14,15 @@ class DoctorsAtHospital extends Component {
 
     componentDidMount = async () => {
         try {
-            const doctorCount = await factory.methods.Length_Doctors().call();
-            //const doctorList = await factory.methods.getAllDoctors().call();
             const id = this.props.match.params.address;
-            
             const doctorList = await factory.methods.getAllDoctorsInHospital(id).call();
-           
-            //const hospitalContract = await factory.methods.ReadHospital(id).call();
-            //const doctorContract =  await factory.methods.getAllDoctorsInHospital(id).call();
             this.setState({ 
                 doctorList: doctorList,
-                doctorCount: doctorCount,
             });
         } finally {
             this.setState({ loadingPage: false })
         }
     }
-
     renderDoctorRows() {
         let doctorsHospital = this.state.doctorList;
         let doctorFilter = doctorsHospital.filter( doctor => doctor.idDoctor != 0x0000000000000000000000000000000000000000);
