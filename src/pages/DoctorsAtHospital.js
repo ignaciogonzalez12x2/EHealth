@@ -7,7 +7,6 @@ import DoctorRow from '../components/DoctorRow';
 class DoctorsAtHospital extends Component {
     state = {
         doctorList: '',
-        doctorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -15,12 +14,10 @@ class DoctorsAtHospital extends Component {
 
     componentDidMount = async () => {
         try {
-            const doctorCount = await factory.methods.Length_Doctors().call();
             const id = this.props.match.params.address;
             const doctorList = await factory.methods.getAllDoctorsInHospital(id).call();
             this.setState({ 
                 doctorList: doctorList,
-                doctorCount: doctorCount,
             });
         } finally {
             this.setState({ loadingPage: false })

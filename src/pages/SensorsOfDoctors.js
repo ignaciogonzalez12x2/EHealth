@@ -7,7 +7,6 @@ import SensorRow from '../components/SensorRow';
 class SensorsOfDoctor extends Component {
     state = {
         sensorList: '',
-        sensorCount: '',
         loadingPage: true,
         loading: false,
         errorMessage: ''
@@ -16,11 +15,9 @@ class SensorsOfDoctor extends Component {
     componentDidMount = async () => {
         try {
             const id = this.props.match.params.address;
-            const sensorCount = await factory.methods.Length_sensors().call();
             const sensorList = await factory.methods.getAllSensorOfDoctor(id).call();
             this.setState({ 
                 sensorList: sensorList,
-                sensorCount: sensorCount,
             });
         } finally {
             this.setState({ loadingPage: false })

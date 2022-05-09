@@ -3,7 +3,6 @@ pragma solidity >=0.7.4;
 pragma abicoder v2;
 // Factory contract for eHealth
 contract EHealth {
-    uint nextIdDoctor;
     uint nextIdSensor;
     // Owner direction 
     address owner = 0x8FcF3B91599C6d5bb93D8c7df9f3974C622b83a4;
@@ -58,7 +57,9 @@ contract EHealth {
     event readOneSensor (string ,string , address, bool);
     event sendingData(uint[]);
     event viewData(uint[]);
+
     // *********************************** HOSPITALS ***********************************
+    
     // Add hospital in the system
     function AddHospital(address _idHospital, string memory _name, string memory _state, string memory _postalCode ) 
     public onlyOracle (oracleAddress,owner){
@@ -73,7 +74,6 @@ contract EHealth {
         }
         revert('Hospital not found');
     }
-
     // Remove permission of the hospital
     function RemoveHospital(address _address) 
     public onlyOracle (oracleAddress,owner){
@@ -81,9 +81,7 @@ contract EHealth {
         hospitalCenters[index].permission=false;
         emit DeleteHospital(hospitalCenters[index].permission);
     }
-
     // Update hospital data
-
     function UpdateHospital(address _address, string memory _name, string memory _state, string memory _postalCode, bool _permission ) 
     public onlyOracle (oracleAddress,owner){
         uint index = FindHospital(_address);
@@ -98,17 +96,12 @@ contract EHealth {
         hospitalCenters[index].permission
         );
     }
-
     // All hospitals 
-
     function getAllHospitals() 
     public onlyOracle (oracleAddress,owner) view returns (Hospital[] memory){
-        //emit getAllHospital();
-        return hospitalCenters;
+                return hospitalCenters;
     }
-
     // Read hospital data
-
     function ReadHospital(address _address) 
     public onlyOracle (oracleAddress,owner) view returns(string memory, string memory, string memory, bool){
         uint index = FindHospital(_address);
@@ -134,7 +127,6 @@ contract EHealth {
         }
         revert('Doctor not found');
     }
-
     // Remove permission of the doctor
     function RemoveDoctor(address _id) 
     public onlyOracle (oracleAddress,owner){
@@ -142,7 +134,6 @@ contract EHealth {
         doctorsHospital[index].permission=false;
         emit DeleteDoctor(doctorsHospital[index].permission);
     }
-
     // Update doctor data
     function UpdateDoctor(address _id, string memory _nameDoctor, address _hospital ,bool _permission) 
     public onlyOracle (oracleAddress,owner){
@@ -156,20 +147,17 @@ contract EHealth {
         doctorsHospital[index].permission
         );
     }
-
     // Read doctor data
     function ReadDoctor(address _id)
     public onlyOracle (oracleAddress,owner) view returns(string memory, address, bool){
         uint index = FindDoctor(_id);
         return (doctorsHospital[index].nameDoctor,doctorsHospital[index].hospital,doctorsHospital[index].permission);
-        //emit readOneDoctor(doctorsHospital[index].nameDoctor,doctorsHospital[index].hospital,doctorsHospital[index].permission);
     }
      // All Doctors 
     function getAllDoctors() 
     public onlyOracle (oracleAddress,owner) view returns (Doctor[] memory){
         return doctorsHospital;
     }
-
     // All Doctors in a hospital
     function getAllDoctorsInHospital(address _address) 
     public onlyOracle (oracleAddress,owner) view returns (Doctor[] memory){
@@ -193,8 +181,7 @@ contract EHealth {
         emit NewSensor(nextIdSensor,_mac, _patientName, _idDoctor, _active, _data);
         nextIdSensor++;
     }
-
-     // Find sensor 
+    // Find sensor 
     function FindSensor(uint _idSensor) internal view returns(uint){
         for(uint i = 0 ; i < sensorsDoctor.length ; i++){
             if(sensorsDoctor[i].idSensor==_idSensor){
@@ -203,7 +190,6 @@ contract EHealth {
         }
         revert('Sensor not found');
     }
-
     // Remove active sensor
     function RemoveSensor(uint _id, address _idDoctor) 
     public onlyDoctor (_idDoctor, oracleAddress,owner){
@@ -211,7 +197,6 @@ contract EHealth {
         sensorsDoctor[index].active=false;
         emit DeleteSensor(sensorsDoctor[index].active);
     }
-
     // Update sensor data
     function UpdateSensor(uint _id, string memory _mac, string memory _patientName,address _idDoctor, bool _active ) 
     public onlyDoctor (_idDoctor, oracleAddress,owner){
@@ -226,7 +211,6 @@ contract EHealth {
         sensorsDoctor[index].idDoctor,
         sensorsDoctor[index].active);
     }
-
     // Read sensor data
     function ReadSensor(uint _id)
     public onlyOracle (oracleAddress,owner) view returns(string memory,string memory, address, bool){
@@ -238,7 +222,6 @@ contract EHealth {
     public onlyOracle (oracleAddress,owner) view returns (Sensor[] memory){
         return sensorsDoctor;
     }
-
     // All medical sensors for a doctor
     function getAllSensorOfDoctor (address _idDoctor) 
     public onlyDoctor (_idDoctor, oracleAddress,owner) view returns (Sensor[] memory){
@@ -250,27 +233,24 @@ contract EHealth {
         }
         return ret;
     }
-
     // Sensor sending data
     function sendData(uint _idSensor, uint[] memory _data) 
     public onlyOracle(oracleAddress,owner){
         uint index = FindSensor(_idSensor);
         sensorsDoctor[index].data=_data;
     }
-
     // View data for sensor
     function viewSensorData(uint _idSensor, address _idDoctor) 
     public onlyDoctor (_idDoctor, oracleAddress,owner) view returns(uint[] memory){
         uint index = FindSensor(_idSensor);
         return sensorsDoctor[index].data;
     } 
-
-     modifier onlyOracle(address _oracle, address _owner){
+    // Modifiers
+    modifier onlyOracle(address _oracle, address _owner){
         require((oracleAddress == _oracle) || (owner == _owner), 
         "No privileges");
         _;
     }
-
     modifier onlyDoctor(address _idDoctor,address _oracle, address _owner){
         require((FindDoctor(_idDoctor) < 0) || (oracleAddress == _oracle) || (owner == _owner),"No privileges");
         _;
