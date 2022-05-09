@@ -8,7 +8,6 @@ class HospitalNew extends Component {
   state = {
     idHospital: '',
     name: '',
-    city: '',
     state: '',
     postalCode: '',
     permission: false,
@@ -25,7 +24,6 @@ class HospitalNew extends Component {
         await factory.methods
             .AddHospital(this.state.idHospital,
               this.state.name,
-              this.state.city, 
               this.state.state, 
               this.state.postalCode)
             .send({ from: accounts[0]});
@@ -63,14 +61,6 @@ class HospitalNew extends Component {
           </Form.Field>
 
           <Form.Field>
-            <label>City</label>
-            <Input
-              value={this.state.city}
-              onChange={event => this.setState({ city: event.target.value })}
-            />
-          </Form.Field>
-
-          <Form.Field>
             <label>State</label>
             <Input
               value={this.state.state}
@@ -86,14 +76,6 @@ class HospitalNew extends Component {
             />
           </Form.Field>
 
-          {/*<Form.Field>
-            <label>Permission</label>
-            <Input
-              value={this.state.permission}
-              onChange={event => this.setState({ permission: event.target.value })}
-            />
-          </Form.Field>*/}
-
           <Message error header="ERROR" content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
             Create!
@@ -103,5 +85,4 @@ class HospitalNew extends Component {
     );
   }
 }
-
 export default withRouter(HospitalNew);
