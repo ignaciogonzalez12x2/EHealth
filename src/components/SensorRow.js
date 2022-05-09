@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component, useRef } from 'react';
 import { Link } from "react-router-dom";
 import { Table, Button, Icon, Message } from 'semantic-ui-react';
 import web3 from '../ethereum/web3';
 import factory from '../ethereum/factory';
+import emailjs from '@emailjs/browser'
 
 class SensorRow extends Component {
   state = {
@@ -42,7 +43,7 @@ class SensorRow extends Component {
     try {
         const accounts = await web3.eth.getAccounts();
         await factory.methods
-            .RemoveSensor(this.state.idSensor)
+            .RemoveSensor(this.state.idSensor, this.state.idDoctor)
             .send({ from: accounts[0]});
         alert('Sensor delete !');
         // Refresh, using withRouter
@@ -60,20 +61,35 @@ class SensorRow extends Component {
     this.setState({ loading: true, errorMessage: '' });
     try {
       const min = 0;
-      const max = 200;
-      let val = 0;
-      let data = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-      for (let i = 0; i < data.length; i++){
-          do{
-            val = parseInt((min + ((Math.random() * (max - min)))));
-          }while(val > 60 && val < 100);
-          data[i] = data [i]+val;
-      }
-      //let data = init.map((ini)=> parseInt((min + ((Math.random() * (max - min))) > 60 && ((Math.random() * (max - min))) < 100) ? (Math.random() * (max - min)) : ini + (min + ((Math.random() * (max - min))))));
+      const max = 120;
+      let init = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+      let data = init.map((ini)=> parseInt(ini + (min + Math.random() * (max - min))));
       this.setState({ 
         data: data
       });
       const accounts = await web3.eth.getAccounts();
+      // EMAIL 
+      let isBad = false;
+      for (let i = 0 ; i< data.length ; i++){
+        if(data[i]>100 || data[i]<60){
+          isBad = true;
+        }
+      }
+      if(isBad){
+
+          emailjs.send("service_wknqeo1","template_h5a6es2",{
+            idDoctor: this.state.idDoctor,
+            patientName: this.state.patientName,
+            idSensor: this.state.idSensor,
+            },'f6PEbOqOtjL70Oc8K')
+          .then((result) => {
+              console.log(result.text);
+          }, (error) => {
+              console.log(error.text);
+          });
+        
+      }
+      
       await factory.methods
             .sendData(this.state.idSensor, this.state.data)
             .send({ from: accounts[0]});
@@ -135,5 +151,4 @@ class SensorRow extends Component {
       );
     }
 }
-
 export default SensorRow;
